@@ -1,0 +1,35 @@
+extends ../../layout/index
+include ../../utils/mixins/chatListItem
+append head 
+    title Чат
+block content
+    - 
+        let chats = [
+            {
+                author: 'Андрей',
+                content: 'hello world again',
+                timestamp: '10:49',
+                count: 4
+            },
+            {
+                author: 'Вадим',
+                content: 'Круто!',
+                timestamp: '21:05',
+            }
+        ]    
+    .chat
+        .chat-list 
+            .chat-list__header 
+                a.chat-list__profile-link(href='../profile/index') Профиль
+                .chat-list__search
+                    input(type="text" placeholder='Поиск')
+            .chat-list__body        
+                each chat in chats 
+                    +chatListItem(chat.author, chat.content, chat.timestamp, chat.count) 
+        .chat-content
+            .chat-content-control 
+                button(type='file').chat-content-control__file
+                    img(src='../../../static/icons/file.svg')
+                input(placeholder='Сообщение...' name='message').chat-content-control__input
+                button(type='button').chat-content-control__button Отправить
+

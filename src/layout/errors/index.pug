@@ -1,0 +1,11 @@
+extends ../index
+append head 
+    title Ошибка
+block content
+    .layoutError 
+        h1.layoutError__title 
+            block errorCode
+        p.layoutError__description 
+            block errorText
+        .layoutError__controls    
+            a(href="/").button.button--transparent Назад к чатам       
