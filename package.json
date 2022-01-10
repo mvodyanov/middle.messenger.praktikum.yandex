@@ -6,7 +6,7 @@
   "license": "MIT",
   "engines": {
     "node": ">=12"
-  },  
+  },
   "scripts": {
     "dev": "parcel src/index.pug --open",
     "build": "parcel build src/*.pug",
@@ -15,11 +15,9 @@
   "devDependencies": {
     "@parcel/transformer-pug": "^2.0.1",
     "@parcel/transformer-sass": "^2.0.1",
+    "express": "^4.17.2",
     "parcel": "^2.0.1",
     "pug": "^3.0.2",
     "sass": "^1.45.0"
-  },
-  "dependencies": {
-    "express": "^4.17.2"
   }
 }
