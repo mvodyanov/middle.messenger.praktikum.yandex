@@ -1,0 +1,15 @@
+extends ../../layout/index
+include ../../utils/mixins/formControlInput
+
+append head 
+    title Вход
+
+block content 
+    .login
+        h1.login__title Вход
+        form.form.login__form
+            +formControlInput('login', 'логин', '', 'неверный логин')
+            +formControlInput('password', 'пароль', '', 'неверный пароль')
+        .login__controls 
+            button(type="submit").button Вход        
+            a(href="./register").button.button--transparent Ещё не зарегистрированы?        

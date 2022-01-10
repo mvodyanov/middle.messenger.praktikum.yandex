@@ -1,0 +1,5 @@
+mixin formControlInput(name, label, value, errorText = 'ошибка')
+    .form-control 
+        .form-control__label=label
+        input(type=attributes.type || 'text', name=name, value=value).form-control__input
+        .form-control__error=errorText
