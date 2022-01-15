@@ -2,10 +2,10 @@ extends ../index
 append head 
     title Ошибка
 block content
-    .layoutError 
-        h1.layoutError__title 
+    .layout-error 
+        h1.layout-error__title 
             block errorCode
-        p.layoutError__description 
+        p.layout-error__description 
             block errorText
-        .layoutError__controls    
+        .layout-error__controls    
             a(href="/").button.button--transparent Назад к чатам       

@@ -1,28 +1,25 @@
-@import '../../styles/variables';
+@import "../../styles/variables";
 
 .login {
-    margin: auto;
-    width: 100%;
-    max-width: 340px;
-    min-height: 450px;
-    display: flex;
-    flex-direction: column;
-    background: $white;
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.14);
-    border-radius: 12px;
-    padding: 50px 30px 30px;
-    &__title {
-      display: block;
-      font-size: 20px;
-      margin: 0px auto 40px;
-    }
-    &__form {
-    }
-    &__controls {
-      padding-top: 50px;
-      margin-top: auto;
-    }
-    &__title {
-    }
+  margin: auto;
+  width: 100%;
+  max-width: 340px;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  box-shadow: 0 0 6px rgb(0 0 0 / 14%);
+  border-radius: 12px;
+  padding: 50px 30px 30px;
+
+  &__title {
+    display: block;
+    font-size: 20px;
+    margin: 0 auto 40px;
   }
-  
+
+  &__controls {
+    padding-top: 50px;
+    margin-top: auto;
+  }
+}
