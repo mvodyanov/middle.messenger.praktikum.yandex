@@ -9,8 +9,8 @@ export function first<T>(list: T[]): T | undefined {
 }
 
 export function revert<T>(array: T[]): T[] {
-  let newArray = [];
-  for (let i = array.length - 1; i >= 0; i = i - 1) {
+  const newArray = [];
+  for (let i = array.length - 1; i >= 0; i -= 1) {
     newArray.push(array[i]);
   }
   return newArray;
@@ -20,13 +20,16 @@ export function range(
   start: number,
   end: number,
   step: number,
-  isRight: boolean
+  isRight: boolean,
 ): number[] {
-  let array: number[] = [];
+  const array: number[] = [];
 
+  let selfStart = start;
+  let selfEnd = end;
+  let selfStep = step;
   if (end === undefined) {
-    end = start;
-    start = 0;
+    selfEnd = start;
+    selfStart = 0;
   }
 
   if (end === 0) {
@@ -34,10 +37,10 @@ export function range(
   }
 
   if (!step) {
-    step = end > 0 ? 1 : -1;
+    selfStep = end > 0 ? 1 : -1;
   }
 
-  for (let i = start; Math.abs(i) < Math.abs(end); i = i + step) {
+  for (let i = selfStart; Math.abs(i) < Math.abs(selfEnd); i += selfStep) {
     array.push(i);
   }
 
@@ -49,11 +52,9 @@ export function rangeRight(start: number, end: number, step: number): number[] {
 }
 
 export function isEmpty(value: unknown): boolean {
-  if (typeof value === "boolean" || typeof value === "number" || value == null)
-    return true;
-  if (Array.isArray(value) || typeof value == "string")
-    return value.length === 0;
+  if (typeof value === 'boolean' || typeof value === 'number' || value == null) { return true; }
+  if (Array.isArray(value) || typeof value === 'string') { return value.length === 0; }
   if (value instanceof Map || value instanceof Set) return value.size === 0;
-  if (typeof value === "object") return Object.keys(value).length === 0;
+  if (typeof value === 'object') return Object.keys(value).length === 0;
   return false;
 }
