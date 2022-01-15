@@ -15,13 +15,15 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "express": "^4.17.2",
-    "stylelint": "^14.2.0",
-    "stylelint-config-standard-scss": "^3.0.0"
+    "express": "^4.17.2"
   },
   "lint-staged": {
-    "*.{js,ts}": ["eslint . --fix"],
-    "*.scss": ["stylelint --fix"]
+    "*.{js,ts}": [
+      "eslint . --fix"
+    ],
+    "*.scss": [
+      "stylelint --fix"
+    ]
   },
   "devDependencies": {
     "@parcel/transformer-pug": "^2.0.1",
@@ -37,6 +39,8 @@
     "parcel": "^2.0.1",
     "pug": "^3.0.2",
     "sass": "^1.45.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "stylelint": "^14.2.0",
+    "stylelint-config-standard-scss": "^3.0.0"
   }
 }
