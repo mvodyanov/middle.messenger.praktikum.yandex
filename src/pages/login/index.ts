@@ -30,10 +30,6 @@ class Login extends Block {
   render() {
     return this.compile(template, this.props);
   }
-
-  componentDidMount(): void {
-    this.children.formControlLogin.setProps({ value: 1345 });
-  }
 }
 
 export default Login;
