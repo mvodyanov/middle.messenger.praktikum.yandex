@@ -27,3 +27,14 @@ $inter: "Inter", serif;
 
   @include hover-opacity;
 }
+
+@mixin error-message {
+  display: block;
+  color: $red;
+  font-size: 8px;
+  margin-top: 5px;
+
+  &:empty {
+    display: none;
+  }
+}

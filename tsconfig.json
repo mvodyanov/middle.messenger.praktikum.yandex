@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
+    "target": "es5",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "moduleResolution": "node"
   }
 }
+ 

@@ -1,0 +1,13 @@
+.login
+    h1.login__title Регистрация
+    form.form.login__form
+        | {{formControlEmail}}
+        | {{formControlLogin}}
+        | {{formControlFirstName}}
+        | {{formControlSecondName}}
+        | {{formControlPhone}}
+        | {{formControlPassword}}
+        | {{formControlPasswordRepeat}}           
+        .login__controls 
+            | {{button}}        
+            a(href="./index").button.button--transparent Войти       
