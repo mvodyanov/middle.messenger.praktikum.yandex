@@ -6,12 +6,23 @@ import Button from '../../components/Button';
 import Avatar from '../../components/Avatar';
 import { VALIDATION_RULES } from '../../utils/validation';
 
+const mockProfile: Record<string, string> = {
+  avatar: 'https://i.pinimg.com/originals/69/57/2e/69572e3166e64f31fa1061bb222dc279.jpg',
+  first_name: 'Иван',
+  second_name: 'Иванов',
+  display_name: 'Иван',
+  login: 'ivanivanov',
+  email: 'pochta@yandex.ru',
+  phone: '+79099673090',
+  password: 'Password1',
+  password_repeat: 'Password1',
+};
+
 export default class Profile extends Block {
   constructor() {
     super({
       avatar: new Avatar({
         name: 'avatar',
-        value: 'https://i.pinimg.com/originals/69/57/2e/69572e3166e64f31fa1061bb222dc279.jpg',
       }),
       formControlEmail: new FormControl({
         name: 'email',
@@ -67,5 +78,13 @@ export default class Profile extends Block {
 
   render() {
     return this.compile(template, this.props);
+  }
+
+  componentDidMount(): void {
+    Object.entries(this.children)
+      .filter(([, children]) => children instanceof FormControl || children instanceof Avatar)
+      .forEach(([key, children]) => {
+        this.children[key].setProps({ value: mockProfile[children.name] });
+      });
   }
 }

@@ -26,8 +26,4 @@ export default class Chat extends Block {
   render() {
     return this.compile(template, this.props);
   }
-
-  // componentDidMount(): void {
-  //   this.children.formControlLogin.setProps({ value: 1345 });
-  // }
 }
