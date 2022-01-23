@@ -30,12 +30,6 @@ export default class Avatar extends Block {
     return (this.getContent().querySelector(this.eventTarget) as HTMLInputElement).value;
   }
 
-  componentDidUpdate() {
-    // eslint-disable-next-line no-console
-    console.info(34);
-    return true;
-  }
-
   render() {
     setTimeout(() => {
       // todo: just because pug can't render image src

@@ -4,6 +4,7 @@ import Block from '../../utils/Block';
 import { validateFormControls } from '../../utils/events';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
+import ChatListItem from '../../components/ChatListItem';
 
 export default class Chat extends Block {
   constructor() {
@@ -19,6 +20,12 @@ export default class Chat extends Block {
         type: 'submit',
         className: 'chat-content-control__button',
         events: { click: (event: Event) => validateFormControls.call(this, event, this.children) },
+      }),
+      chatListItem: new ChatListItem({
+        author: 'Андрей',
+        content: 'Pug is sucks',
+        timestamp: '10:45',
+        count: 3,
       }),
     });
   }

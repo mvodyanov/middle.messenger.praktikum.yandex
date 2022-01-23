@@ -73,7 +73,7 @@ export default abstract class Block {
   }
 
   private _init() {
-    this.eventBus.emit(Block.EVENTS.FLOW_CDM);
+    this.dispatchComponentDidMount();
   }
 
   private _componentDidMount() {

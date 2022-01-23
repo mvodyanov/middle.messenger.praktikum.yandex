@@ -4,7 +4,8 @@
             a.chat-list__profile-link(href='/#profile') Профиль
             .chat-list__search
                 input(type="text" placeholder='Поиск')
-
+        .chat-list__body
+            | {{chatListItem}}
     .chat-content
         .chat-content-control 
             button(type='file').chat-content-control__file
