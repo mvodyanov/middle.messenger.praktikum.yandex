@@ -1,16 +1,1 @@
-## Чат из учебного курса Яндекс.Прктикум по профессии middle frontend разработчик.
-Данный проект предназначен для разработки текстового чата в рамках учебного курса. 
-На текущем этапе подключены:
-- parcel для сборки проекта
-- шаблонизатор pug
-- express сервер для раздачи статики
-- scss для работы со стилями 
-Происходит автоматический деплой при обновлении ветки delpoy
-## Команды
-npm run dev для запуска dev-сервера parcel
-для сборки проекта npm run build
-для запуска express-сервера npm run start
-
-## Ссылки
-макеты (предосталвенные командой Яндекс.Практикума): https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1 
-развернутая копия на netlify: https://agitated-visvesvaraya-3225a8.netlify.app 
+https://github.com/mvodyanov/middle.messenger.praktikum.yandex/pull/2
