@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "dev": "parcel src/index.html --open",
-    "build": "parcel build src/*.pug",
+    "build": "parcel build src/index.html",
     "start": "npm run build && node ./index.js",
     "prepare": "husky install"
   },
