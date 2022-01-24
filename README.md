@@ -24,3 +24,4 @@ npm run dev для запуска dev-сервера parcel
 ## Ссылки
 макеты (предосталвенные командой Яндекс.Практикума): https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1 
 развернутая копия на netlify: https://agitated-visvesvaraya-3225a8.netlify.app 
+
