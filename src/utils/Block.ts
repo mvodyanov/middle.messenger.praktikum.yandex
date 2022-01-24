@@ -1,4 +1,5 @@
 import { v4 as makeUUID } from 'uuid';
+
 import { Props, Children } from '../types/types';
 import EventBus from './EventBus';
 import templateWithProps from './templateWithProps';
