@@ -7,12 +7,12 @@ $red: #ff2f2f;
 $light-grey: #efefef;
 $text-grey: #999;
 $border-grey: #eaeaea;
-
 $ease: all 0.4s;
 $inter: "Inter", serif;
 
 @mixin hover-opacity($opacity: 0.8) {
   transition: $ease;
+
   &:hover {
     opacity: $opacity;
   }
@@ -24,6 +24,17 @@ $inter: "Inter", serif;
   color: $white;
   padding: 0 10px;
   border-radius: 100px;
-  border: none;
-  @include hover-opacity();
+
+  @include hover-opacity;
+}
+
+@mixin error-message {
+  display: block;
+  color: $red;
+  font-size: 8px;
+  margin-top: 5px;
+
+  &:empty {
+    display: none;
+  }
 }

@@ -1,9 +1,9 @@
-@import "variables.scss";
-@import "base.scss";
-@import "components/button.scss";
-@import "components/form.scss";
-
-@import "../layout/errors/index";
-@import "../pages/login/index";
-@import "../pages/chat/index";
-@import "../pages/profile/index";
+@import "variables";
+@import "base";
+@import "../components/Button/index";
+@import "../components/FormControl/index";
+@import "../components/Avatar/index";
+@import "../pages/Error/index";
+@import "../pages/Login/index";
+@import "../pages/Chat/index";
+@import "../pages/Profile/index";

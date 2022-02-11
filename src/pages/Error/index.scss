@@ -1,0 +1,17 @@
+.layout-error {
+  margin: auto;
+  text-align: center;
+
+  &__title {
+    margin: 0 auto 20px;
+    font-size: 40px;
+  }
+
+  &__description {
+    font-size: 20px;
+  }
+
+  &__controls {
+    margin-top: 60px;
+  }
+}
