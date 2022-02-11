@@ -18,7 +18,10 @@ export default abstract class Block {
     this.eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
-    this.eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    this.eventBus.on(
+      Block.EVENTS.FLOW_CDU,
+      this._componentDidUpdate.bind(this),
+    );
   }
 
   private _element: Element;
@@ -51,7 +54,7 @@ export default abstract class Block {
 
   componentDidMount(): void {}
 
-  componentDidUpdate(): void { }
+  componentDidUpdate(): void {}
 
   dispatchComponentDidMount() {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
@@ -76,7 +79,6 @@ export default abstract class Block {
   }
 
   private _init() {
-    console.info(this.id);
     this.dispatchComponentDidMount();
   }
 
@@ -102,23 +104,23 @@ export default abstract class Block {
     }
   }
 
-  private _removeEvents() {
+  private _handleEvents = (type: 'add' | 'remove') => () => {
     const { events = {} } = this.props;
     const target = this.eventTarget
-      ? this.getContent().querySelector(this.eventTarget) : this._element;
+      ? this.getContent().querySelector(this.eventTarget)
+      : this._element;
     Object.keys(events).forEach((eventName) => {
-      target?.addEventListener(eventName, events[eventName]);
+      if (type === 'add') {
+        target?.addEventListener(eventName, events[eventName]);
+      } else {
+        target?.addEventListener(eventName, events[eventName]);
+      }
     });
-  }
+  };
 
-  private _addEvents() {
-    const { events = {} } = this.props;
-    const target = this.eventTarget
-      ? this.getContent().querySelector(this.eventTarget) : this._element;
-    Object.keys(events).forEach((eventName) => {
-      target?.addEventListener(eventName, events[eventName]);
-    });
-  }
+  private _removeEvents = this._handleEvents('remove');
+
+  private _addEvents = this._handleEvents('add');
 
   private _render() {
     const element = this.render();

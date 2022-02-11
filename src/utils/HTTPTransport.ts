@@ -36,7 +36,7 @@ export default class HTTPTransport {
   }
 
   private request = (url: string, options: Options, timeout = 5000) => {
-    const { headers = {}, method, data } = options;
+    const { headers = { 'Content-Type': 'application/json' }, method, data } = options;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -55,7 +55,13 @@ export default class HTTPTransport {
 
       xhr.timeout = timeout;
 
-      xhr.onload = () => resolve(xhr);
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          resolve(xhr);
+        } else {
+          reject();
+        }
+      };
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
