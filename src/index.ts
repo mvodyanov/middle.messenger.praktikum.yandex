@@ -3,39 +3,17 @@ import Register from './pages/Register';
 import Error from './pages/Error';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
-import { Block } from './types/types';
+import Router from './utils/Router';
+import { ROUTES } from './utils/consts';
 
-const app = document.querySelector('#app')!;
+const router = new Router('#app');
 
-const ROUTES = {
-  HOMEPAGE: '',
-  LOGIN: '#login',
-  REGISTER: '#register',
-  CHAT: '#chat',
-  PROFILE: '#profile',
-  ERROR: {
-    404: '#error/404',
-    500: '#error/500',
-  },
-};
-
-const render = (Page: Block) => {
-  app.innerHTML = '';
-  app.appendChild(Page.render());
-};
-
-const hashHandler = () => {
-  const { hash } = window.location;
-  switch (hash) {
-    case ROUTES.HOMEPAGE:
-    case ROUTES.LOGIN: render(new Login()); break;
-    case ROUTES.REGISTER: render(new Register()); break;
-    case ROUTES.CHAT: render(new Chat()); break;
-    case ROUTES.PROFILE: render(new Profile()); break;
-    case ROUTES.ERROR[500]: render(new Error(500)); break;
-    default: render(new Error(404));
-  }
-};
-
-hashHandler();
-window.addEventListener('hashchange', hashHandler);
+router
+  .use(ROUTES.HOMEPAGE, new Login())
+  .use(ROUTES.LOGIN, new Login())
+  .use(ROUTES.REGISTER, new Register())
+  .use(ROUTES.CHAT, new Chat())
+  .use(ROUTES.PROFILE, new Profile())
+  .use(ROUTES.ERROR[500], new Error(500))
+  .use(ROUTES.ERROR[404], new Error(404))
+  .start();
