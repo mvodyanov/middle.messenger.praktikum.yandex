@@ -1,5 +1,7 @@
 import template from './Error.pug';
 import Block from '../../utils/Block';
+import Link from '../../components/Link';
+import { ROUTES } from '../../utils/consts';
 
 const getErrorText = (code: number) => {
   switch (code) {
@@ -12,6 +14,11 @@ export default class Error extends Block {
     super({
       errorCode: code,
       errorText: getErrorText(code),
+      backLink: new Link({
+        className: 'button button--transparent',
+        label: 'Назад к чатам',
+        link: ROUTES.HOMEPAGE,
+      }),
     });
   }
 

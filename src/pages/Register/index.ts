@@ -4,6 +4,8 @@ import { validateFormControls } from '../../utils/events';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
 import { VALIDATION_RULES } from '../../utils/validation';
+import Link from '../../components/Link';
+import { ROUTES } from '../../utils/consts';
 
 class Register extends Block {
   constructor() {
@@ -51,6 +53,11 @@ class Register extends Block {
         label: 'Зарегистрироваться',
         type: 'submit',
         events: { click: (event: Event) => validateFormControls.call(this, event, this.children) },
+      }),
+      loginLink: new Link({
+        className: 'button button--transparent',
+        label: 'Назад',
+        link: ROUTES.HOMEPAGE,
       }),
     });
   }

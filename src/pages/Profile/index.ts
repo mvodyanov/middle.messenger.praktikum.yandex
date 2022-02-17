@@ -5,6 +5,8 @@ import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
 import Avatar from '../../components/Avatar';
 import { VALIDATION_RULES } from '../../utils/validation';
+import { ROUTES } from '../../utils/consts';
+import Link from '../../components/Link';
 
 const mockProfile: Record<string, string> = {
   avatar: 'https://i.pinimg.com/originals/69/57/2e/69572e3166e64f31fa1061bb222dc279.jpg',
@@ -72,6 +74,11 @@ export default class Profile extends Block {
         label: 'Сохранить',
         type: 'submit',
         events: { click: (event: Event) => validateFormControls.call(this, event, this.children) },
+      }),
+      chatLink: new Link({
+        className: 'profile__back-link',
+        label: 'Назад',
+        link: ROUTES.CHAT,
       }),
     });
   }

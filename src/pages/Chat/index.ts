@@ -5,6 +5,8 @@ import { validateFormControls } from '../../utils/events';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
 import ChatListItem from '../../components/ChatListItem';
+import Link from '../../components/Link';
+import { ROUTES } from '../../utils/consts';
 
 export default class Chat extends Block {
   constructor() {
@@ -26,6 +28,11 @@ export default class Chat extends Block {
         content: 'Pug is sucks',
         timestamp: '10:45',
         count: 3,
+      }),
+      profileLink: new Link({
+        className: 'chat-list__profile-link',
+        label: 'Профиль',
+        link: ROUTES.PROFILE,
       }),
     });
   }

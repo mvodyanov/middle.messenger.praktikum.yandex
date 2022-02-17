@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error from './pages/Error';
@@ -6,11 +7,10 @@ import Chat from './pages/Chat';
 import Router from './utils/Router';
 import { ROUTES } from './utils/consts';
 
-const router = new Router('#app');
+export const router = new Router('#app');
 
 router
   .use(ROUTES.HOMEPAGE, new Login())
-  .use(ROUTES.LOGIN, new Login())
   .use(ROUTES.REGISTER, new Register())
   .use(ROUTES.CHAT, new Chat())
   .use(ROUTES.PROFILE, new Profile())
