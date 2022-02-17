@@ -1,3 +1,4 @@
+import { isEqual } from '.';
 import { Props, Children } from '../types/types';
 import EventBus from './EventBus';
 import templateWithProps from './templateWithProps';
@@ -90,14 +91,11 @@ export default abstract class Block {
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentWillUpdate(oldProps: unknown, newProps: unknown) {
-    if (oldProps === newProps) {
-      return false;
-    }
-    return true;
+  componentWillUpdate(oldProps: Props, newProps: Props) {
+    return !isEqual(newProps, oldProps);
   }
 
-  private _componentDidUpdate(oldProps: unknown, newProps: unknown) {
+  private _componentDidUpdate(oldProps: Props, newProps: Props) {
     if (this.componentWillUpdate(oldProps, newProps)) {
       this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
       this.componentDidUpdate();
