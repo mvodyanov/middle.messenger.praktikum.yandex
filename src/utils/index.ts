@@ -29,15 +29,21 @@ export const isEqual = (a:PlainObject, b:PlainObject): boolean => {
 };
 
 const merge = (lhs: PlainObject, rhs: PlainObject): PlainObject => {
-  let result = { ...lhs };
-  Object.keys(rhs).forEach((key) => {
-    if (result[key]) {
-      result[key] = merge(result[key] as PlainObject, rhs[key] as PlainObject);
-    } else {
-      result = { ...result, [key]: rhs[key] };
-    }
-  });
-  return result;
+  if (isObject(rhs)) {
+    Object.keys(rhs).forEach((key) => {
+      if (lhs[key]) {
+      // eslint-disable-next-line no-param-reassign
+        lhs[key] = merge(lhs[key] as PlainObject, rhs[key] as PlainObject);
+      } else {
+      // eslint-disable-next-line no-param-reassign
+        lhs[key] = rhs[key];
+      }
+    });
+  } else {
+    // eslint-disable-next-line no-param-reassign
+    lhs = rhs;
+  }
+  return lhs;
 };
 
 export const set = (
@@ -45,7 +51,7 @@ export const set = (
   path: string,
   value: unknown,
 ): PlainObject | unknown => {
-  if (typeof object !== 'object' || object === null) {
+  if (typeof object !== 'object' || object == null) {
     return object;
   }
 

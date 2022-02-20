@@ -8,10 +8,14 @@ function render(query: string, block: Block) {
   const root = document.querySelector(query);
   if (root) {
     root.innerHTML = '';
-    root.appendChild(block.render());
+    root.append(block.getContent());
   }
 }
 
+type IProps = {
+  rootQuery: string,
+  access?: () => boolean
+};
 export default class Route {
   private _pathname: string;
 
@@ -19,16 +23,19 @@ export default class Route {
 
   private _block: null | Block;
 
-  private _props: any;
+  private _props: IProps;
 
-  constructor(pathname: string, view: Block, props: any) {
+  access: IProps['access'];
+
+  constructor(pathname: string, view: Block, props: IProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
     this._props = props;
+    this.access = props.access;
   }
 
-  navigate(pathname: any) {
+  navigate(pathname: string) {
     if (this.match(pathname)) {
       this._pathname = pathname;
       this.render();

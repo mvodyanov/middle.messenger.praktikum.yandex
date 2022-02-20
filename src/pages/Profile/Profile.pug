@@ -1,5 +1,6 @@
 .profile
     | {{chatLink}}
+    | {{logoutLink}}
     .profile__content  
         form.profile-form
             .profile-form__group 
@@ -14,4 +15,6 @@
             .profile-form__group 
                 | {{formControlPassword}}
                 | {{formControlPasswordRepeat}}
+            span.form-control__error='{{errorText}}'
+
             | {{button}}

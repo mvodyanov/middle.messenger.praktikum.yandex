@@ -1,18 +1,19 @@
-/* eslint-disable import/prefer-default-export */
-
 import FormControl from '../components/FormControl';
+import { Children } from '../types/types';
 
-export const validateFormControls = (event: Event, formControls: FormControl) => {
-  event.preventDefault();
-
+export const validateFormControls = (children: Children) => {
   let validationErrorsCounter = 0;
   const formData: Record<string, string> = {};
-  Object.entries(formControls)
+  Object.entries(children)
     .filter(([key]) => key.startsWith('formControl'))
     .forEach(([,formControl]: FormControl[]) => {
       validationErrorsCounter += (formControl.validate() ? 0 : 1);
       formData[formControl.name] = formControl.getValue();
     }, false);
-  // eslint-disable-next-line no-console
-  if (validationErrorsCounter === 0) console.log(formData);
+
+  if (validationErrorsCounter !== 0) {
+    throw new Error('Validation error');
+  }
+
+  return formData;
 };

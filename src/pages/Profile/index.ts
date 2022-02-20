@@ -1,12 +1,13 @@
 import template from './Profile.pug';
 import Block from '../../utils/Block';
-import { validateFormControls } from '../../utils/events';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
 import Avatar from '../../components/Avatar';
 import { VALIDATION_RULES } from '../../utils/validation';
 import { ROUTES } from '../../utils/consts';
 import Link from '../../components/Link';
+import AuthController from '../../controllers/auth-controller';
+import { connect } from '../../utils/Store';
 
 const mockProfile: Record<string, string> = {
   avatar: 'https://i.pinimg.com/originals/69/57/2e/69572e3166e64f31fa1061bb222dc279.jpg',
@@ -20,7 +21,7 @@ const mockProfile: Record<string, string> = {
   password_repeat: 'Password1',
 };
 
-export default class Profile extends Block {
+class Profile extends Block {
   constructor() {
     super({
       avatar: new Avatar({
@@ -73,14 +74,31 @@ export default class Profile extends Block {
       button: new Button({
         label: 'Сохранить',
         type: 'submit',
-        events: { click: (event: Event) => validateFormControls.call(this, event, this.children) },
+        events: { click: (event) => this.onSubmit(event) },
       }),
       chatLink: new Link({
         className: 'profile__back-link',
         label: 'Назад',
         link: ROUTES.CHAT,
       }),
+      logoutLink: new Link({
+        className: 'profile__logout-link',
+        label: 'Выход',
+        events: { click: (event) => this.onLogout(event) },
+      }),
+
+      errorText: '',
     });
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    // AuthController.signIn(this.children); UserController
+  }
+
+  onLogout(event: Event) {
+    event.preventDefault();
+    AuthController.logout();
   }
 
   render() {
@@ -95,3 +113,7 @@ export default class Profile extends Block {
       });
   }
 }
+
+export default connect(Profile, (state) => ({
+  errorText: state.auth?.error,
+}));

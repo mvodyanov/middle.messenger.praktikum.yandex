@@ -21,4 +21,4 @@ export type PlainObject<T = any> = {
 
 export type Props = PlainObject;
 
-setTimeout(() => { alert(1); }, 1);
+export type FormData = Record<string, string>;

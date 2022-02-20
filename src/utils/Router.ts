@@ -1,8 +1,9 @@
+import authController from '../controllers/auth-controller';
 import Block from './Block';
-import { ROUTES } from './consts';
+import { appSelector, ROUTES } from './consts';
 import Route from './Route';
 
-export default class Router {
+class Router {
   static __instance: any;
 
   routes: Route[];
@@ -27,26 +28,32 @@ export default class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: Block) {
-    const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+  use(pathname: string, block: Block, access?: () => boolean) {
+    const route = new Route(
+      pathname,
+      block,
+      { rootQuery: this._rootQuery, access },
+    );
 
     this.routes.push(route);
 
     return this;
   }
 
+  async initUser() {
+    await authController.initUser();
+  }
+
   start() {
     window.onpopstate = ((event) => {
-      const { hash, pathname } = (event.currentTarget as Window).location;
-      this._onRoute(pathname + hash);
+      this._onRoute((event.currentTarget as Window).location.pathname);
     });
-
-    const { hash, pathname } = window.location;
-    this._onRoute(pathname + hash);
+    this._onRoute(window.location.pathname);
   }
 
   _onRoute(pathname: string) {
     const route = this.getRoute(pathname);
+
     if (!route) {
       return;
     }
@@ -74,9 +81,11 @@ export default class Router {
 
   getRoute(pathname: string) {
     let route = this.routes.find((r: Route) => r.match(pathname));
-    if (!route) {
+    if (!route || (route.access && !route.access())) {
       route = this.routes.find((r: Route) => r.match(ROUTES.ERROR[404]));
     }
     return route;
   }
 }
+
+export default new Router(appSelector);

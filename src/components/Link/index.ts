@@ -1,17 +1,17 @@
 import template from './Link.pug';
 import Block from '../../utils/Block';
-import { router } from '../..';
+import Router from '../../utils/Router';
 
 type IProps = {
-  label: string
+  label?: string
   link?: string
   className?: string
+  events?: Record<string, (event: Event) => void >
 };
 
 export default class Link extends Block {
   constructor(props: IProps) {
     super({
-      link: '#',
       className: '',
       events: {
         click: (e: Event) => this.go(e),
@@ -23,7 +23,7 @@ export default class Link extends Block {
   go(e: Event) {
     e.preventDefault();
     e.stopPropagation();
-    router.go(this.props.link);
+    Router.go(this.props.link);
   }
 
   render() {

@@ -1,6 +1,8 @@
 import template from './Error.pug';
 import Block from '../../utils/Block';
 import Link from '../../components/Link';
+import Router from '../../utils/Router';
+import store from '../../utils/Store';
 import { ROUTES } from '../../utils/consts';
 
 const getErrorText = (code: number) => {
@@ -16,10 +18,19 @@ export default class Error extends Block {
       errorText: getErrorText(code),
       backLink: new Link({
         className: 'button button--transparent',
-        label: 'Назад к чатам',
-        link: ROUTES.HOMEPAGE,
+        label: 'Вернуться назад',
+        events: { click: (event) => this.onBack(event) },
       }),
     });
+  }
+
+  onBack(event: Event) {
+    event.preventDefault();
+    if (store.getState().auth.user) {
+      Router.go(ROUTES.CHAT);
+    } else {
+      Router.go(ROUTES.HOMEPAGE);
+    }
   }
 
   render() {

@@ -53,6 +53,10 @@ export default abstract class Block {
     return this._element;
   }
 
+  getContent() {
+    return this._element;
+  }
+
   componentDidMount(): void {}
 
   componentDidUpdate(): void {}
@@ -167,10 +171,6 @@ export default abstract class Block {
       stub?.replaceWith(child._element);
     });
     return fragment.content.children[0];
-  }
-
-  protected getContent() {
-    return this._element;
   }
 
   protected setProps = (nextProps: {}) => {
