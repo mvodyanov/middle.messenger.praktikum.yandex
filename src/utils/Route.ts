@@ -9,12 +9,13 @@ function render(query: string, block: Block) {
   if (root) {
     root.innerHTML = '';
     root.append(block.getContent());
+    block.dispatchComponentDidMount();
   }
 }
 
 type IProps = {
   rootQuery: string,
-  access?: () => boolean
+  hasAccess?: () => boolean
 };
 export default class Route {
   private _pathname: string;
@@ -25,14 +26,14 @@ export default class Route {
 
   private _props: IProps;
 
-  access: IProps['access'];
+  hasAccess: IProps['hasAccess'];
 
   constructor(pathname: string, view: Block, props: IProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
     this._props = props;
-    this.access = props.access;
+    this.hasAccess = props.hasAccess;
   }
 
   navigate(pathname: string) {

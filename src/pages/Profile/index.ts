@@ -7,19 +7,8 @@ import { VALIDATION_RULES } from '../../utils/validation';
 import { ROUTES } from '../../utils/consts';
 import Link from '../../components/Link';
 import AuthController from '../../controllers/auth-controller';
-import { connect } from '../../utils/Store';
-
-const mockProfile: Record<string, string> = {
-  avatar: 'https://i.pinimg.com/originals/69/57/2e/69572e3166e64f31fa1061bb222dc279.jpg',
-  first_name: 'Иван',
-  second_name: 'Иванов',
-  display_name: 'Иван',
-  login: 'ivanivanov',
-  email: 'pochta@yandex.ru',
-  phone: '+79099673090',
-  password: 'Password1',
-  password_repeat: 'Password1',
-};
+import store, { connect } from '../../utils/Store';
+import UserController from '../../controllers/user-controller';
 
 class Profile extends Block {
   constructor() {
@@ -49,8 +38,8 @@ class Profile extends Block {
         rule: VALIDATION_RULES.NAME,
       }),
       formControlDisplayName: new FormControl({
-        name: 'second_name',
-        label: 'Фамилия',
+        name: 'display_name',
+        label: 'Отображаемое имя',
         rule: VALIDATION_RULES.NAME,
       }),
       formControlPhone: new FormControl({
@@ -59,16 +48,18 @@ class Profile extends Block {
         type: 'tel',
         rule: VALIDATION_RULES.PHONE,
       }),
-      formControlPassword: new FormControl({
-        name: 'password',
-        label: 'Пароль',
-        type: 'password',
+      formControlOldPassword: new FormControl({
+        name: 'oldPassword',
+        label: 'Старый пароль',
+        type: 'text',
+        // placeholder: '***',
         rule: VALIDATION_RULES.PASSWORD,
       }),
-      formControlPasswordRepeat: new FormControl({
-        name: 'password_repeat',
-        label: 'Пароль (ещё раз)',
-        type: 'password',
+      formControlNewPassword: new FormControl({
+        name: 'newPassword',
+        label: 'Новый пароль',
+        type: 'text',
+        // placeholder: '***',
         rule: VALIDATION_RULES.PASSWORD,
       }),
       button: new Button({
@@ -93,7 +84,7 @@ class Profile extends Block {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    // AuthController.signIn(this.children); UserController
+    UserController.changeUser(this.children);
   }
 
   onLogout(event: Event) {
@@ -106,14 +97,18 @@ class Profile extends Block {
   }
 
   componentDidMount(): void {
-    Object.entries(this.children)
-      .filter(([, children]) => children instanceof FormControl || children instanceof Avatar)
-      .forEach(([key, children]) => {
-        this.children[key].setProps({ value: mockProfile[children.name] });
-      });
+    const { user } = store.getState().auth;
+    if (user) {
+      Object.entries(this.children)
+        .filter(([, children]) => children instanceof FormControl || children instanceof Avatar)
+        .forEach(([key, children]) => {
+          this.children[key].setProps({ value: user[children.name] || '' });
+        });
+    }
   }
 }
 
 export default connect(Profile, (state) => ({
-  errorText: state.auth?.error,
+  errorText: state.error,
+  user: state.auth.user,
 }));

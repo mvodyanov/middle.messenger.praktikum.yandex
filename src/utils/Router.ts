@@ -28,11 +28,11 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: Block, access?: () => boolean) {
+  use(pathname: string, block: Block, hasAccess?: () => boolean) {
     const route = new Route(
       pathname,
       block,
-      { rootQuery: this._rootQuery, access },
+      { rootQuery: this._rootQuery, hasAccess },
     );
 
     this.routes.push(route);
@@ -81,7 +81,7 @@ class Router {
 
   getRoute(pathname: string) {
     let route = this.routes.find((r: Route) => r.match(pathname));
-    if (!route || (route.access && !route.access())) {
+    if (!route || (route.hasAccess && !route.hasAccess())) {
       route = this.routes.find((r: Route) => r.match(ROUTES.ERROR[404]));
     }
     return route;

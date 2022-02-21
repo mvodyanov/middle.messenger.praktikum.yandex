@@ -51,5 +51,5 @@ class Login extends Block {
 }
 
 export default connect(Login, (state) => ({
-  errorText: state.auth.error,
+  errorText: state.error,
 }));

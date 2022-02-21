@@ -7,4 +7,10 @@ export const ENDPOINTS = {
     USER: '/user',
     LOGOUT: '/logout',
   },
+  USER: {
+    PATH: '/user',
+    PASSWORD: '/password',
+    PROFILE: '/profile',
+    AVATAR: '/profile/avatar',
+  },
 };

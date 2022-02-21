@@ -13,8 +13,8 @@
                 | {{formControlEmail}}
                 | {{formControlPhone}}
             .profile-form__group 
-                | {{formControlPassword}}
-                | {{formControlPasswordRepeat}}
-            span.form-control__error='{{errorText}}'
+                | {{formControlOldPassword}}
+                | {{formControlNewPassword}}
+            span.form-control__error.profile-form__error='{{errorText}}'
 
             | {{button}}

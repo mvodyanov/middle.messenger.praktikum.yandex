@@ -9,16 +9,16 @@ enum StoreEvents {
 
 type TInitialState = {
   auth: {
-    error: string
     user: null | PlainObject
   },
+  error: string
 };
 
 const initialState: TInitialState = {
   auth: {
-    error: '',
     user: null,
   },
+  error: '',
 };
 
 class Store extends EventBus {
