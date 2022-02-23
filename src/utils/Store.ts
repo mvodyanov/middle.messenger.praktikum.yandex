@@ -11,6 +11,7 @@ type TInitialState = {
   auth: {
     user: null | PlainObject
   },
+  chats: []
   error: string
 };
 
@@ -18,10 +19,17 @@ const initialState: TInitialState = {
   auth: {
     user: null,
   },
+  chats: [],
   error: '',
 };
 
 class Store extends EventBus {
+  constructor() {
+    super();
+    // register event before connect init
+    this.on(StoreEvents.Updated, () => {});
+  }
+
   private _state = initialState;
 
   public getState() {

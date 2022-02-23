@@ -1,4 +1,5 @@
 import authController from '../controllers/auth-controller';
+import { AConstructorTypeOf } from '../types/types';
 import Block from './Block';
 import { appSelector, ROUTES } from './consts';
 import Route from './Route';
@@ -28,7 +29,7 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname: string, block: Block, hasAccess?: () => boolean) {
+  use(pathname: string, block: AConstructorTypeOf<Block>, hasAccess?: () => boolean) {
     const route = new Route(
       pathname,
       block,

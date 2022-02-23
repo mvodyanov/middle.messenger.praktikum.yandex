@@ -38,7 +38,7 @@ class AuthController {
       Store.set('auth.user', JSON.parse(user.response));
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.info(`initUser error:${error}`);
+      console.info(`initUser error:${error.reason || error}`);
     }
   }
 

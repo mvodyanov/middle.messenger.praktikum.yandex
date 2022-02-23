@@ -13,4 +13,8 @@ export const ENDPOINTS = {
     PROFILE: '/profile',
     AVATAR: '/profile/avatar',
   },
+  CHATS: {
+    PATH: '/chats',
+    ROOT: '/',
+  },
 };

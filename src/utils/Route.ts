@@ -1,4 +1,4 @@
-import { Block } from '../types/types';
+import { AConstructorTypeOf, Block } from '../types/types';
 
 function isEqual(lhs: string, rhs:string) {
   return lhs === rhs;
@@ -9,7 +9,6 @@ function render(query: string, block: Block) {
   if (root) {
     root.innerHTML = '';
     root.append(block.getContent());
-    block.dispatchComponentDidMount();
   }
 }
 
@@ -20,7 +19,7 @@ type IProps = {
 export default class Route {
   private _pathname: string;
 
-  private _blockClass: Block;
+  private _blockClass: AConstructorTypeOf<Block>;
 
   private _block: null | Block;
 
@@ -28,7 +27,7 @@ export default class Route {
 
   hasAccess: IProps['hasAccess'];
 
-  constructor(pathname: string, view: Block, props: IProps) {
+  constructor(pathname: string, view: AConstructorTypeOf<Block>, props: IProps) {
     this._pathname = pathname;
     this._blockClass = view;
     this._block = null;
@@ -55,7 +54,7 @@ export default class Route {
 
   render() {
     if (!this._block) {
-      this._block = this._blockClass;
+      this._block = new this._blockClass();
       render(this._props.rootQuery, this._block);
     }
   }

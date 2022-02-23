@@ -6,6 +6,7 @@ export type ValidationRule = {
 };
 
 export type Block = BlockClass;
+
 export type Children = Record<string, any>;
 
 export type Options = {
@@ -22,3 +23,5 @@ export type PlainObject<T = any> = {
 export type Props = PlainObject;
 
 export type FormData = Record<string, string>;
+
+export type AConstructorTypeOf<T> = new (...args:any[]) => T;

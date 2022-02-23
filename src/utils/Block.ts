@@ -1,4 +1,4 @@
-import { isEqual } from '.';
+import { isArray, isEqual } from '.';
 import { Props, Children } from '../types/types';
 import EventBus from './EventBus';
 import templateWithProps from './templateWithProps';
@@ -19,10 +19,7 @@ export default abstract class Block {
     this.eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
-    this.eventBus.on(
-      Block.EVENTS.FLOW_CDU,
-      this._componentDidUpdate.bind(this),
-    );
+    this.eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
   }
 
   private _element: Element;
@@ -66,14 +63,14 @@ export default abstract class Block {
   }
 
   private _getChildren(propsAndChildren: Record<string, {}>): {
-    children: Record<string, Block>;
+    children: Record<string, Block | Block[]>;
     props: {};
   } {
-    const children: Record<string, Block> = {};
+    const children: Record<string, Block | Block[]> = {};
     const props: Record<string, {}> = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
+      if (value instanceof Block || isArray(value)) {
         children[key] = value;
       } else {
         props[key] = value;
@@ -90,7 +87,13 @@ export default abstract class Block {
   private _componentDidMount() {
     this.componentDidMount();
     Object.values(this.children).forEach((child) => {
-      child.dispatchComponentDidMount();
+      if (Array.isArray(child)) {
+        child.forEach((innerChild: Children) => {
+          innerChild.dispatchComponentDidMount();
+        });
+      } else {
+        child.dispatchComponentDidMount();
+      }
     });
     this.eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
@@ -160,15 +163,33 @@ export default abstract class Block {
   protected compile(template: string, props?: any) {
     const propsAndStubs = { ...props };
     Object.entries(this.children).forEach(([key, child]) => {
-      propsAndStubs[key] = `<div data-id="${(child as Block).id}"></div>`;
+      if (Array.isArray(child)) {
+        child.forEach((innerChild: Children) => {
+          if (!propsAndStubs[key]) {
+            propsAndStubs[key] = [];
+          }
+          propsAndStubs[key].push(
+            `<div data-id="${innerChild.id}"></div>`,
+          );
+        });
+      } else {
+        propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
+      }
     });
 
     const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
     fragment.innerHTML = templateWithProps(template, propsAndStubs);
 
     Object.values(this.children).forEach((child) => {
-      const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-      stub?.replaceWith(child._element);
+      if (Array.isArray(child)) {
+        child.forEach((innerChild: Children) => {
+          const stub = fragment.content.querySelector(`[data-id="${innerChild.id}"]`);
+          (stub as HTMLElement).replaceWith(innerChild.getContent());
+        });
+      } else {
+        const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+        stub?.replaceWith(child._element);
+      }
     });
     return fragment.content.children[0];
   }
@@ -177,6 +198,15 @@ export default abstract class Block {
     if (!nextProps) {
       return;
     }
-    Object.assign(this.props, nextProps);
+
+    const { children, props } = this._getChildren(nextProps);
+
+    if (Object.values(children).length) {
+      Object.assign(this.children, children);
+    }
+
+    if (Object.values(props).length) {
+      Object.assign(this.props, props);
+    }
   };
 }

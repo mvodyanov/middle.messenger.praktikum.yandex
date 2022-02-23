@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import template from './Error.pug';
 import Block from '../../utils/Block';
 import Link from '../../components/Link';
@@ -11,11 +12,14 @@ const getErrorText = (code: number) => {
     default: return 'Не туда попали';
   }
 };
-export default class Error extends Block {
-  constructor(code: number) {
+
+class Error extends Block {
+  constructor(props: {
+    errorCode: number
+    errorText: string
+  }) {
     super({
-      errorCode: code,
-      errorText: getErrorText(code),
+      ...props,
       backLink: new Link({
         className: 'button button--transparent',
         label: 'Вернуться назад',
@@ -35,5 +39,23 @@ export default class Error extends Block {
 
   render() {
     return this.compile(template, this.props);
+  }
+}
+
+export class Error404 extends Error {
+  constructor() {
+    super({
+      errorCode: 404,
+      errorText: getErrorText(404),
+    });
+  }
+}
+
+export class Error500 extends Error {
+  constructor() {
+    super({
+      errorCode: 500,
+      errorText: getErrorText(500),
+    });
   }
 }
