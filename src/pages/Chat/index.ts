@@ -8,6 +8,7 @@ import Link from '../../components/Link';
 import { ROUTES } from '../../utils/consts';
 import ChatController from '../../controllers/chat-controller';
 import { connect } from '../../utils/Store';
+import ChatWindow from '../../components/ChatWindow';
 
 class Chat extends Block {
   constructor() {
@@ -24,18 +25,13 @@ class Chat extends Block {
         className: 'chat-content-control__button',
         events: { click: (event) => this.onSubmit(event) },
       }),
-      chatListItem: new ChatListItem({
-        author: 'Андрей',
-        content: 'Pug is sucks',
-        timestamp: '10:45',
-        count: 3,
-      }),
       profileLink: new Link({
         className: 'chat-list__profile-link',
         label: 'Профиль',
         link: ROUTES.PROFILE,
       }),
-      chats: '',
+      chatList: '',
+      chatWindow: new ChatWindow(),
     });
   }
 
@@ -45,20 +41,29 @@ class Chat extends Block {
 
   onSubmit(event: Event) {
     event.preventDefault();
-    // ChatController.createChat();
   }
 
-  componentDidMount(): void {
-    ChatController.getChats();
+  async componentDidMount() {
+    await ChatController.getChatList();
+
+    const searchParams = (new URL(window.location.href)).searchParams.get('chatId');
+    if (searchParams) {
+      await ChatController.getChatUsers(parseFloat(searchParams));
+    }
+  }
+
+  componentWillUnmount() {
+    ChatController.clearCurrentChat();
   }
 }
 
 export default connect(Chat, (state) => ({
   errorText: state.error,
-  chats: state.chats.map((chat: any) => new ChatListItem({
+  chatList: state.chat.list?.map((chat: any) => new ChatListItem({
+    chatId: chat.id,
     author: chat.title,
     content: chat.last_message?.content,
     timestamp: chat.last_message?.time,
     count: chat.unread_count,
-  })),
+  })) || '',
 }));

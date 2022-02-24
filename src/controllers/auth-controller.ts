@@ -13,7 +13,9 @@ class AuthController {
       Store.set('error', '');
       const formData = validateFormControls(children);
       await authAPI.signUp(formData);
-      Router.go(ROUTES.HOMEPAGE);
+      const user = await authAPI.getUser();
+      Store.set('auth.user', JSON.parse(user.response));
+      Router.go(ROUTES.CHAT);
     } catch (error) {
       Store.set('error', error.reason || '');
     }

@@ -77,5 +77,5 @@ class Register extends Block {
 }
 
 export default connect(Register, (state) => ({
-  errorText: state.auth?.error,
+  errorText: state.error,
 }));

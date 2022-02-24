@@ -25,3 +25,15 @@ export type Props = PlainObject;
 export type FormData = Record<string, string>;
 
 export type AConstructorTypeOf<T> = new (...args:any[]) => T;
+
+export type UserResponse = {
+  id: number
+  first_name: string
+  second_name: string
+  display_name: string
+  login: string
+  email: string
+  phone: string
+  avatar: string
+  role: string
+};

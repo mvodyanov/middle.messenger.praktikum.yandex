@@ -1,0 +1,14 @@
+.chat-window(class='{{noCurrentChat}}')
+    .chat-window__header 
+        .chat-window__user-list 
+            | {{userList}}
+            .chat-window-add
+                | {{userAddInput}}
+                | {{userAddButton}}
+    .chat-window__body
+        | тут будет чат
+    .chat-window__placeholder 
+        | Чат не выбран. Добавить новый?
+        .chat-window-add
+            | {{chatAddInput}}
+            | {{chatAddButton}} 

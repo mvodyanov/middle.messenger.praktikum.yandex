@@ -1,7 +1,11 @@
 import template from './ChatListItem.pug';
 import Block from '../../utils/Block';
+import Router from '../../utils/Router';
+import { ROUTES } from '../../utils/consts';
+import ChatController from '../../controllers/chat-controller';
 
 type IProps = {
+  chatId: string
   author: string
   content: string
   timestamp: string
@@ -9,9 +13,20 @@ type IProps = {
 };
 
 export default class ChatListItem extends Block {
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: IProps) {
-    super(props);
+    super({
+      ...props,
+      events: {
+        click: (e: Event) => this.go(e),
+      },
+    });
+  }
+
+  go(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    Router.go(`${ROUTES.CHAT}?chatId=${this.props.chatId}`);
+    ChatController.getChatUsers(this.props.chatId);
   }
 
   render() {

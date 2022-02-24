@@ -1,8 +1,135 @@
 @import "../../styles/variables";
 
+@mixin chat-user-item {
+  display: inline-block;
+  width: auto;
+  border-radius: 100px;
+  padding: 0 10px;
+  padding-right: 25px;
+  background: none;
+  border: 2px solid $blue;
+  color: $blue;
+  position: relative;
+  margin-right: 10px;
+  height: 38px;
+}
+
 .chat {
   width: 100%;
   display: flex;
+
+  &__input {
+    width: 100%;
+    border-radius: 100px;
+    background: $light-grey;
+    height: 37px;
+    border: 1px solid transparent;
+    padding: 0 20px;
+    transition: $ease;
+    margin: 0 10px;
+    font-size: 12px;
+
+    input {
+      border: none;
+      background: transparent;
+      height: 100%;
+    }
+
+    span {
+      margin-top: 2px;
+    }
+  }
+
+  &-window {
+    width: 100%;
+    height: 100%;
+
+    &__header,
+    &__body {
+      padding: 15px 20px;
+
+      .is-no-current-chat & {
+        display: none;
+      }
+    }
+
+    &-add {
+      margin-left: auto;
+      display: flex;
+
+      &__input {
+        display: inline-block;
+        margin-bottom: 0;
+
+        input {
+          @include chat-user-item;
+
+          margin-right: 0;
+          width: 0;
+          transition: $ease 1s;
+        }
+      }
+
+      &__button {
+        border-radius: 100%;
+        width: auto;
+        width: 30px;
+        height: 30px;
+        margin-top: 4px;
+        align-items: flex-start;
+        line-height: 28px;
+        margin-left: -34px;
+        font-size: 120%;
+        position: relative;
+        z-index: 9;
+      }
+
+      &:hover {
+        .chat-window-add__input input {
+          width: 270px;
+          padding-right: 40px;
+          transition: $ease;
+        }
+      }
+    }
+
+    &__placeholder {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      .is-no-current-chat & {
+        display: flex;
+      }
+
+      .chat-window-add {
+        margin: 0 0 0 10px;
+      }
+    }
+
+    &__user {
+      &-list {
+        display: flex;
+      }
+
+      &-button {
+        @include chat-user-item;
+
+        &::after {
+          content: "+";
+          display: inline-block;
+          transform: rotate(45deg);
+          font-size: 150%;
+          top: 50%;
+          right: 0;
+          margin-right: 5px;
+          line-height: 0;
+          position: absolute;
+        }
+      }
+    }
+  }
 
   &-list {
     padding: 10px 0;
@@ -136,28 +263,6 @@
         background: none;
 
         @include hover-opacity(0.2);
-      }
-
-      &__input {
-        width: 100%;
-        border-radius: 100px;
-        background: $light-grey;
-        height: 37px;
-        border: 1px solid transparent;
-        padding: 0 20px;
-        transition: $ease;
-        margin: 0 10px;
-        font-size: 12px;
-
-        input {
-          border: none;
-          background: transparent;
-          height: 100%;
-        }
-
-        span {
-          margin-top: 2px;
-        }
       }
 
       &__button {

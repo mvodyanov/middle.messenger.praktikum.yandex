@@ -2,10 +2,11 @@
     .chat-list 
         .chat-list__header 
             | {{profileLink}}
-            input.chat-list__search(type="text" placeholder='Поиск')
+            //- input.chat-list__search(type="text" placeholder='Поиск') todo: make search
         .chat-list__body
-            | {{chats}}
+            | {{chatList}}
     .chat-content
+        | {{chatWindow}}
         .chat-content-control 
             button(type='file').chat-content-control__file
                 img(src='../../../static/icons/file.svg')

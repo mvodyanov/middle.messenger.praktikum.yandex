@@ -1,17 +1,25 @@
 /* eslint-disable max-classes-per-file */
 import { set } from '.';
-import { Block, PlainObject, Props } from '../types/types';
+import {
+  Block, PlainObject, Props, UserResponse,
+} from '../types/types';
 import EventBus from './EventBus';
 
 enum StoreEvents {
-  Updated = 'Updated',
+  UPDATED = 'updated',
 }
 
 type TInitialState = {
   auth: {
-    user: null | PlainObject
+    user: null | UserResponse
   },
-  chats: []
+  chat: {
+    list?: []
+    current?: {
+      id?: number
+      userList: UserResponse[]
+    }
+  }
   error: string
 };
 
@@ -19,7 +27,8 @@ const initialState: TInitialState = {
   auth: {
     user: null,
   },
-  chats: [],
+  chat: {
+  },
   error: '',
 };
 
@@ -27,7 +36,7 @@ class Store extends EventBus {
   constructor() {
     super();
     // register event before connect init
-    this.on(StoreEvents.Updated, () => {});
+    this.on(StoreEvents.UPDATED, () => {});
   }
 
   private _state = initialState;
@@ -38,7 +47,9 @@ class Store extends EventBus {
 
   public set(path: string, value: unknown) {
     set(this._state, path, value);
-    this.emit(StoreEvents.Updated);
+    // eslint-disable-next-line no-console
+    console.info(this._state);
+    this.emit(StoreEvents.UPDATED);
   }
 }
 
@@ -53,7 +64,7 @@ export function connect(
     constructor(props?: Props) {
       super({ ...props, ...mapStateToProps(store.getState()) });
 
-      store.on(StoreEvents.Updated, () => {
+      store.on(StoreEvents.UPDATED, () => {
         this.setProps({ ...mapStateToProps(store.getState()) });
       });
     }

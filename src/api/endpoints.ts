@@ -16,5 +16,6 @@ export const ENDPOINTS = {
   CHATS: {
     PATH: '/chats',
     ROOT: '/',
+    USERS: '/users',
   },
 };

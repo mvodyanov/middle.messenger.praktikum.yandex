@@ -13,6 +13,7 @@ export default abstract class Block {
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_RENDER: 'flow:render',
     FLOW_CDU: 'flow:component-did-update',
+    FLOW_CWU: 'flow:component-will-unmount',
   };
 
   private _registerEvents() {
@@ -20,6 +21,7 @@ export default abstract class Block {
     this.eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     this.eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    this.eventBus.on(Block.EVENTS.FLOW_CWU, this._unmountComponent.bind(this));
   }
 
   private _element: Element;
@@ -38,7 +40,7 @@ export default abstract class Block {
     this.id = makeUUID();
 
     const { children, props } = this._getChildren(propsAndChildren);
-    this.children = children;
+    this.children = this._makePropsProxy(children);
     this.props = this._makePropsProxy({ ...props, id: this.id });
 
     this.eventBus = new EventBus();
@@ -57,6 +59,8 @@ export default abstract class Block {
   componentDidMount(): void {}
 
   componentDidUpdate(): void {}
+
+  componentWillUnmount(): void { }
 
   dispatchComponentDidMount() {
     this.eventBus.emit(Block.EVENTS.FLOW_CDM);
@@ -84,12 +88,18 @@ export default abstract class Block {
     this.dispatchComponentDidMount();
   }
 
+  private _unmountComponent(): void {
+    this.componentWillUnmount();
+    this._removeEvents();
+    this._element.remove();
+  }
+
   private _componentDidMount() {
     this.componentDidMount();
     Object.values(this.children).forEach((child) => {
       if (Array.isArray(child)) {
         child.forEach((innerChild: Children) => {
-          innerChild.dispatchComponentDidMount();
+          if (innerChild.dispatchComponentDidMount) innerChild.dispatchComponentDidMount();
         });
       } else {
         child.dispatchComponentDidMount();
@@ -184,7 +194,9 @@ export default abstract class Block {
       if (Array.isArray(child)) {
         child.forEach((innerChild: Children) => {
           const stub = fragment.content.querySelector(`[data-id="${innerChild.id}"]`);
-          (stub as HTMLElement).replaceWith(innerChild.getContent());
+          (stub as HTMLElement).replaceWith(
+            innerChild.getContent ? innerChild.getContent() : innerChild,
+          );
         });
       } else {
         const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
@@ -198,7 +210,6 @@ export default abstract class Block {
     if (!nextProps) {
       return;
     }
-
     const { children, props } = this._getChildren(nextProps);
 
     if (Object.values(children).length) {

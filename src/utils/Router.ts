@@ -46,15 +46,12 @@ class Router {
   }
 
   start() {
-    window.onpopstate = ((event) => {
-      this._onRoute((event.currentTarget as Window).location.pathname);
-    });
-    this._onRoute(window.location.pathname);
+    window.onpopstate = (() => this._onRoute());
+    this._onRoute();
   }
 
-  _onRoute(pathname: string) {
-    const route = this.getRoute(pathname);
-
+  _onRoute() {
+    const route = this.getRoute(window.location.pathname);
     if (!route) {
       return;
     }
@@ -69,7 +66,7 @@ class Router {
 
   go(pathname: string) {
     this.history.pushState({}, '', pathname);
-    this._onRoute(pathname);
+    this._onRoute();
   }
 
   back() {

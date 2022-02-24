@@ -4,8 +4,20 @@ import { ENDPOINTS } from './endpoints';
 const chatAPIInstance = new HTTP(ENDPOINTS.CHATS.PATH);
 
 export default class ChatAPI {
-  getChats() {
+  getChatList() {
     return chatAPIInstance.get(ENDPOINTS.CHATS.ROOT);
+  }
+
+  getChatUsers(chatId: number) {
+    return chatAPIInstance.get(`/${chatId}${ENDPOINTS.CHATS.USERS}`);
+  }
+
+  deleteChatUsers(data: { users: number[], chatId: number }) {
+    return chatAPIInstance.delete(ENDPOINTS.CHATS.USERS, { data });
+  }
+
+  addChatUsers(data: { users: number[], chatId: number }) {
+    return chatAPIInstance.put(ENDPOINTS.CHATS.USERS, { data });
   }
 
   createChat(data: { title:string }) {
