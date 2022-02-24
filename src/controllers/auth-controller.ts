@@ -38,6 +38,7 @@ class AuthController {
     try {
       const user = await authAPI.getUser();
       Store.set('auth.user', JSON.parse(user.response));
+      if (window.location.pathname === ROUTES.HOMEPAGE) Router.go(ROUTES.CHAT);
     } catch (error) {
       // eslint-disable-next-line no-console
       console.info(`initUser error:${error.reason || error}`);
