@@ -1,5 +1,6 @@
 export const ENDPOINTS = {
   ROOT: 'https://ya-praktikum.tech/api/v2',
+  SOCKET: 'wss://ya-praktikum.tech/ws',
   AUTH: {
     PATH: '/auth',
     SIGNUP: '/signup',
@@ -17,5 +18,6 @@ export const ENDPOINTS = {
     PATH: '/chats',
     ROOT: '/',
     USERS: '/users',
+    TOKEN: '/token',
   },
 };

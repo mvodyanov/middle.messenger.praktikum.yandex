@@ -2,9 +2,14 @@ import authController from '../controllers/auth-controller';
 import { AConstructorTypeOf } from '../types/types';
 import Block from './Block';
 import { appSelector, ROUTES } from './consts';
+import EventBus from './EventBus';
 import Route from './Route';
 
-class Router {
+export enum RouterEvents {
+  UPDATED = 'updated',
+}
+
+class Router extends EventBus {
   static __instance: any;
 
   routes: Route[];
@@ -16,6 +21,7 @@ class Router {
   _rootQuery: string;
 
   constructor(rootQuery: string) {
+    super();
     if (Router.__instance) {
       // eslint-disable-next-line no-constructor-return
       return Router.__instance;
@@ -67,6 +73,7 @@ class Router {
   go(pathname: string) {
     this.history.pushState({}, '', pathname);
     this._onRoute();
+    this.emit(RouterEvents.UPDATED);
   }
 
   back() {

@@ -7,10 +7,13 @@ import ChatListItem from '../../components/ChatListItem';
 import Link from '../../components/Link';
 import { ROUTES } from '../../utils/consts';
 import ChatController from '../../controllers/chat-controller';
-import { connect } from '../../utils/Store';
+import store, { connect } from '../../utils/Store';
 import ChatWindow from '../../components/ChatWindow';
+import Router, { RouterEvents } from '../../utils/Router';
 
 class Chat extends Block {
+  socket?: WebSocket;
+
   constructor() {
     super({
       formControlMessage: new FormControl({
@@ -41,15 +44,30 @@ class Chat extends Block {
 
   onSubmit(event: Event) {
     event.preventDefault();
+    if (this.socket) {
+      this.socket.send(JSON.stringify({
+        content: this.children.formControlMessage.getValue(),
+        type: 'message',
+      }));
+    }
+  }
+
+  async onRouteHandler() {
+    const searchParams = (new URL(window.location.href)).searchParams.get('chatId');
+    if (searchParams) {
+      const chatId = parseFloat(searchParams);
+      const userId = store.getState().auth.user?.id!;
+      await ChatController.getChatData(chatId);
+
+      const token = store.getState().chat.current?.token!;
+      this.socket = ChatController.initSocket(userId, chatId, token);
+    }
   }
 
   async componentDidMount() {
     await ChatController.getChatList();
-
-    const searchParams = (new URL(window.location.href)).searchParams.get('chatId');
-    if (searchParams) {
-      await ChatController.getChatUsers(parseFloat(searchParams));
-    }
+    Router.on(RouterEvents.UPDATED, () => this.onRouteHandler());
+    this.onRouteHandler();
   }
 
   componentWillUnmount() {

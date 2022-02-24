@@ -1,11 +1,11 @@
 /* eslint-disable max-classes-per-file */
 import { set } from '.';
 import {
-  Block, PlainObject, Props, UserResponse,
+  Block, MessageResponse, PlainObject, Props, UserResponse,
 } from '../types/types';
 import EventBus from './EventBus';
 
-enum StoreEvents {
+export enum StoreEvents {
   UPDATED = 'updated',
 }
 
@@ -18,6 +18,8 @@ type TInitialState = {
     current?: {
       id?: number
       userList: UserResponse[]
+      token?: string,
+      messageList?: MessageResponse[]
     }
   }
   error: string

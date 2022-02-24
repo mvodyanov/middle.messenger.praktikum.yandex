@@ -8,7 +8,7 @@ export default class ChatAPI {
     return chatAPIInstance.get(ENDPOINTS.CHATS.ROOT);
   }
 
-  getChatUsers(chatId: number) {
+  getChatData(chatId: number) {
     return chatAPIInstance.get(`/${chatId}${ENDPOINTS.CHATS.USERS}`);
   }
 
@@ -22,5 +22,9 @@ export default class ChatAPI {
 
   createChat(data: { title:string }) {
     return chatAPIInstance.post(ENDPOINTS.CHATS.ROOT, { data });
+  }
+
+  getChatToken(chatId: number) {
+    return chatAPIInstance.post(`${ENDPOINTS.CHATS.TOKEN}/${chatId}`);
   }
 }

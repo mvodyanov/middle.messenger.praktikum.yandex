@@ -4,6 +4,7 @@ import { connect } from '../../utils/Store';
 import Button from '../Button';
 import ChatController from '../../controllers/chat-controller';
 import FormControl from '../FormControl';
+import Message from '../Message';
 
 type IProps = any;
 
@@ -60,5 +61,5 @@ export default connect(ChatWindow, (state) => ({
     events: { click: () => ChatController.deleteChatUsers([user.id]) },
   })) || '',
   noCurrentChat: state.chat.current == null && 'is-no-current-chat',
-
+  messageList: state.chat.current?.messageList?.map((message) => new Message(message)) || '',
 }));
