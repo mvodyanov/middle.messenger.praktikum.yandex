@@ -119,3 +119,8 @@ export const queryStringify = (data: PlainObject): string | never => {
     return `${result}${key}=${value}${endLine}`;
   }, '');
 };
+
+export const getTimestampTime = (timestamp: string) => {
+  const matches = timestamp.match(/[0-9]{2}:[0-9]{2}?/);
+  return matches ? matches[0] : '';
+};

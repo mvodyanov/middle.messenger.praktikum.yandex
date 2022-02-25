@@ -10,6 +10,7 @@ import ChatController from '../../controllers/chat-controller';
 import store, { connect } from '../../utils/Store';
 import ChatWindow from '../../components/ChatWindow';
 import Router, { RouterEvents } from '../../utils/Router';
+import { ChatListItemResponse } from '../../types/types';
 
 class Chat extends Block {
   socket?: WebSocket;
@@ -77,11 +78,14 @@ class Chat extends Block {
 
 export default connect(Chat, (state) => ({
   errorText: state.error,
-  chatList: state.chat.list?.map((chat: any) => new ChatListItem({
+  chatList: state.chat.list?.map((chat: ChatListItemResponse) => new ChatListItem({
     chatId: chat.id,
     author: chat.title,
-    content: chat.last_message?.content,
-    timestamp: chat.last_message?.time,
-    count: chat.unread_count,
+    content: chat.last_message
+      ? (`${chat.last_message.user.login === state.auth.user?.login
+        ? 'Вы' : chat.last_message.user.login}: ${chat.last_message.content}`)
+      : '',
+    timestamp: chat.last_message?.time || '',
+    count: chat.unread_count === 0 ? '' : chat.unread_count.toString(),
   })) || '',
 }));

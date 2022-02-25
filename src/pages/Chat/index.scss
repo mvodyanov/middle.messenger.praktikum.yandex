@@ -198,6 +198,14 @@
 
       &__data {
         padding-left: 10px;
+        max-width: 50%;
+      }
+
+      &__author,
+      &__content {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       &__author {

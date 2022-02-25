@@ -2,13 +2,14 @@ import template from './ChatListItem.pug';
 import Block from '../../utils/Block';
 import Router from '../../utils/Router';
 import { ROUTES } from '../../utils/consts';
+import { getTimestampTime } from '../../utils';
 
 type IProps = {
-  chatId: string
+  chatId: number
   author: string
   content: string
   timestamp: string
-  count?: number
+  count: string
 };
 
 export default class ChatListItem extends Block {
@@ -28,6 +29,7 @@ export default class ChatListItem extends Block {
   }
 
   render() {
+    this.props.timestamp = getTimestampTime(this.props.timestamp);
     return this.compile(template, this.props);
   }
 }

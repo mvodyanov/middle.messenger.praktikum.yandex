@@ -90,7 +90,7 @@ class ChatController {
       }));
     });
 
-    socket.addEventListener('message', (event) => {
+    socket.addEventListener('message', async (event) => {
       // eslint-disable-next-line no-console
       console.log('Получены данные', event.data);
       const data = JSON.parse(event.data);
@@ -101,6 +101,8 @@ class ChatController {
         const oldMessages = Store.getState().chat.current?.messageList || [];
         Store.set('chat.current.messageList', [data, ...oldMessages]);
       }
+      const chatList = await chatApi.getChatList();
+      Store.set('chat.list', JSON.parse(chatList.response));
     });
 
     return socket;
