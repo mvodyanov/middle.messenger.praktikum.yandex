@@ -124,3 +124,10 @@ export const getTimestampTime = (timestamp: string) => {
   const matches = timestamp.match(/[0-9]{2}:[0-9]{2}?/);
   return matches ? matches[0] : '';
 };
+
+export const sanitizeHTML = (str: string) => {
+  const temp = document.createElement('div');
+  temp.textContent = str;
+  temp.remove();
+  return temp.innerHTML;
+};
