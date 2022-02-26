@@ -5,13 +5,15 @@ import { Error404, Error500 } from './pages/Error';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
 import Router from './utils/Router';
-import { ROUTES } from './utils/consts';
+import { appSelector, ROUTES } from './utils/consts';
 
 const getIsLoggedIn = () => !!store.getState().auth.user;
 
-Router
+export const router = new Router(appSelector, window);
+
+router
   .initUser().then(() => {
-    Router
+    router
       .use(ROUTES.HOMEPAGE, Login, () => !getIsLoggedIn())
       .use(ROUTES.REGISTER, Register, () => !getIsLoggedIn())
       .use(ROUTES.CHAT, Chat, getIsLoggedIn)

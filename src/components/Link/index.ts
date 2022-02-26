@@ -1,6 +1,6 @@
 import template from './Link.pug';
 import Block from '../../utils/Block';
-import Router from '../../utils/Router';
+import { router } from '../..';
 
 type IProps = {
   label?: string
@@ -23,7 +23,7 @@ export default class Link extends Block {
   go(e: Event) {
     e.preventDefault();
     e.stopPropagation();
-    Router.go(this.props.link);
+    router.go(this.props.link);
   }
 
   render() {

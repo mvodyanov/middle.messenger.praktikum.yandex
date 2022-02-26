@@ -16,14 +16,14 @@ class Login extends Block {
       formControlLogin: new FormControl({
         label: 'логин',
         name: 'login',
-        value: 'Vod',
+        value: '',
         rule: VALIDATION_RULES.LOGIN,
       }),
       formControlPassword: new FormControl({
         label: 'пароль',
         name: 'password',
         type: 'password',
-        value: 'Max03081992',
+        value: '',
         rule: VALIDATION_RULES.PASSWORD,
       }),
       button: new Button({

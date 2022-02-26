@@ -2,7 +2,7 @@
 import template from './Error.pug';
 import Block from '../../utils/Block';
 import Link from '../../components/Link';
-import Router from '../../utils/Router';
+import { router } from '../..';
 import store from '../../utils/Store';
 import { ROUTES } from '../../utils/consts';
 
@@ -31,9 +31,9 @@ class Error extends Block {
   onBack(event: Event) {
     event.preventDefault();
     if (store.getState().auth.user) {
-      Router.go(ROUTES.CHAT);
+      router.go(ROUTES.CHAT);
     } else {
-      Router.go(ROUTES.HOMEPAGE);
+      router.go(ROUTES.HOMEPAGE);
     }
   }
 

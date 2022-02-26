@@ -1,7 +1,7 @@
 import authController from '../controllers/auth-controller';
 import { AConstructorTypeOf } from '../types/types';
 import Block from './Block';
-import { appSelector, ROUTES } from './consts';
+import { ROUTES } from './consts';
 import EventBus from './EventBus';
 import Route from './Route';
 
@@ -9,8 +9,10 @@ export enum RouterEvents {
   UPDATED = 'updated',
 }
 
-class Router extends EventBus {
+export default class Router extends EventBus {
   static __instance: any;
+
+  env: any;
 
   routes: Route[];
 
@@ -20,15 +22,16 @@ class Router extends EventBus {
 
   _rootQuery: string;
 
-  constructor(rootQuery: string) {
+  constructor(rootQuery: string, env: any) {
     super();
     if (Router.__instance) {
       // eslint-disable-next-line no-constructor-return
       return Router.__instance;
     }
 
+    this.env = env;
     this.routes = [];
-    this.history = window.history;
+    this.history = env.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
 
@@ -52,12 +55,12 @@ class Router extends EventBus {
   }
 
   start() {
-    window.onpopstate = (() => this._onRoute());
+    this.env.onpopstate = (() => this._onRoute());
     this._onRoute();
   }
 
   _onRoute() {
-    const route = this.getRoute(window.location.pathname);
+    const route = this.getRoute(this.env.location.pathname);
     if (!route) {
       return;
     }
@@ -92,5 +95,3 @@ class Router extends EventBus {
     return route;
   }
 }
-
-export default new Router(appSelector);

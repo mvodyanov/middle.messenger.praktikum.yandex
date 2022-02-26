@@ -1,6 +1,6 @@
 import template from './ChatListItem.pug';
 import Block from '../../utils/Block';
-import Router from '../../utils/Router';
+import { router } from '../..';
 import { ROUTES } from '../../utils/consts';
 import { getTimestampTime } from '../../utils';
 
@@ -25,7 +25,7 @@ export default class ChatListItem extends Block {
   go(e: Event) {
     e.preventDefault();
     e.stopPropagation();
-    Router.go(`${ROUTES.CHAT}?chatId=${this.props.chatId}`);
+    router.go(`${ROUTES.CHAT}?chatId=${this.props.chatId}`);
   }
 
   render() {

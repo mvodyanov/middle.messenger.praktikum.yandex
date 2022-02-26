@@ -9,8 +9,9 @@ import { ROUTES } from '../../utils/consts';
 import ChatController from '../../controllers/chat-controller';
 import store, { connect } from '../../utils/Store';
 import ChatWindow from '../../components/ChatWindow';
-import Router, { RouterEvents } from '../../utils/Router';
+import { RouterEvents } from '../../utils/Router';
 import { ChatListItemResponse } from '../../types/types';
+import { router } from '../..';
 
 class Chat extends Block {
   socket?: WebSocket;
@@ -67,7 +68,7 @@ class Chat extends Block {
 
   async componentDidMount() {
     await ChatController.getChatList();
-    Router.on(RouterEvents.UPDATED, () => this.onRouteHandler());
+    router.on(RouterEvents.UPDATED, () => this.onRouteHandler());
     this.onRouteHandler();
   }
 
