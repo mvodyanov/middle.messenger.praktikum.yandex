@@ -20,14 +20,14 @@ class ErrorComponent extends Block {
 const dom = new JSDOM(
   `<html>
         <body>
-          <div id="root"></div>
+          <div id="app"></div>
         </body>
       </html>`,
   { url: 'http://localhost:3000/' },
 );
 (global as any).window = dom.window;
 
-const router = new Router('#root', window);
+const router = new Router('#app', window);
 
 describe('Router', () => {
   it('Роутер создается', () => {
