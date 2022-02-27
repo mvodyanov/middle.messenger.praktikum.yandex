@@ -1,6 +1,7 @@
 import { validate } from '../../utils/validation';
 import template from './FormControl.pug';
 import Block from '../../utils/Block';
+import { sanitizeHTML } from '../../utils';
 
 type IProps = {
   name: string
@@ -53,7 +54,9 @@ export default class FormControl extends Block {
   }
 
   getValue() {
-    return (this.getContent().querySelector(this.eventTarget) as HTMLInputElement).value;
+    return sanitizeHTML(
+      (this.getContent().querySelector(this.eventTarget) as HTMLInputElement).value,
+    );
   }
 
   render() {

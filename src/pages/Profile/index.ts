@@ -1,24 +1,16 @@
 import template from './Profile.pug';
 import Block from '../../utils/Block';
-import { validateFormControls } from '../../utils/events';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
 import Avatar from '../../components/Avatar';
 import { VALIDATION_RULES } from '../../utils/validation';
+import { ROUTES } from '../../utils/consts';
+import Link from '../../components/Link';
+import AuthController from '../../controllers/auth-controller';
+import store, { connect } from '../../utils/Store';
+import UserController from '../../controllers/user-controller';
 
-const mockProfile: Record<string, string> = {
-  avatar: 'https://i.pinimg.com/originals/69/57/2e/69572e3166e64f31fa1061bb222dc279.jpg',
-  first_name: 'Иван',
-  second_name: 'Иванов',
-  display_name: 'Иван',
-  login: 'ivanivanov',
-  email: 'pochta@yandex.ru',
-  phone: '+79099673090',
-  password: 'Password1',
-  password_repeat: 'Password1',
-};
-
-export default class Profile extends Block {
+class Profile extends Block {
   constructor() {
     super({
       avatar: new Avatar({
@@ -46,8 +38,8 @@ export default class Profile extends Block {
         rule: VALIDATION_RULES.NAME,
       }),
       formControlDisplayName: new FormControl({
-        name: 'second_name',
-        label: 'Фамилия',
+        name: 'display_name',
+        label: 'Отображаемое имя',
         rule: VALIDATION_RULES.NAME,
       }),
       formControlPhone: new FormControl({
@@ -56,24 +48,48 @@ export default class Profile extends Block {
         type: 'tel',
         rule: VALIDATION_RULES.PHONE,
       }),
-      formControlPassword: new FormControl({
-        name: 'password',
-        label: 'Пароль',
-        type: 'password',
+      formControlOldPassword: new FormControl({
+        name: 'oldPassword',
+        label: 'Старый пароль',
+        type: 'text',
+        // placeholder: '***',
         rule: VALIDATION_RULES.PASSWORD,
       }),
-      formControlPasswordRepeat: new FormControl({
-        name: 'password_repeat',
-        label: 'Пароль (ещё раз)',
-        type: 'password',
+      formControlNewPassword: new FormControl({
+        name: 'newPassword',
+        label: 'Новый пароль',
+        type: 'text',
+        // placeholder: '***',
         rule: VALIDATION_RULES.PASSWORD,
       }),
       button: new Button({
         label: 'Сохранить',
         type: 'submit',
-        events: { click: (event: Event) => validateFormControls.call(this, event, this.children) },
+        events: { click: (event) => this.onSubmit(event) },
       }),
+      chatLink: new Link({
+        className: 'profile__back-link',
+        label: 'Назад',
+        link: ROUTES.CHAT,
+      }),
+      logoutLink: new Link({
+        className: 'profile__logout-link',
+        label: 'Выход',
+        events: { click: (event) => this.onLogout(event) },
+      }),
+
+      errorText: '',
     });
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    UserController.changeUser(this.children);
+  }
+
+  onLogout(event: Event) {
+    event.preventDefault();
+    AuthController.logout();
   }
 
   render() {
@@ -81,10 +97,18 @@ export default class Profile extends Block {
   }
 
   componentDidMount(): void {
-    Object.entries(this.children)
-      .filter(([, children]) => children instanceof FormControl || children instanceof Avatar)
-      .forEach(([key, children]) => {
-        this.children[key].setProps({ value: mockProfile[children.name] });
-      });
+    const { user } = store.getState().auth;
+    if (user) {
+      Object.entries(this.children)
+        .filter(([, children]) => children instanceof FormControl || children instanceof Avatar)
+        .forEach(([key, children]) => {
+          this.children[key].setProps({ value: user[children.name] || '' });
+        });
+    }
   }
 }
+
+export default connect(Profile, (state) => ({
+  errorText: state.error,
+  user: state.auth.user,
+}));

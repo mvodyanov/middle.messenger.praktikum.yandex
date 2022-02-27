@@ -1,11 +1,16 @@
 import template from './Register.pug';
 import Block from '../../utils/Block';
-import { validateFormControls } from '../../utils/events';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
 import { VALIDATION_RULES } from '../../utils/validation';
+import Link from '../../components/Link';
+import { ROUTES } from '../../utils/consts';
+import AuthController from '../../controllers/auth-controller';
+import { connect } from '../../utils/Store';
 
 class Register extends Block {
+  errorText: string;
+
   constructor() {
     super({
       formControlEmail: new FormControl({
@@ -50,9 +55,20 @@ class Register extends Block {
       button: new Button({
         label: 'Зарегистрироваться',
         type: 'submit',
-        events: { click: (event: Event) => validateFormControls.call(this, event, this.children) },
+        events: { click: (event) => this.onSubmit(event) },
       }),
+      loginLink: new Link({
+        className: 'button button--transparent',
+        label: 'Назад',
+        link: ROUTES.HOMEPAGE,
+      }),
+      errorText: '',
     });
+  }
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    AuthController.signUp(this.children);
   }
 
   render() {
@@ -60,4 +76,6 @@ class Register extends Block {
   }
 }
 
-export default Register;
+export default connect(Register, (state) => ({
+  errorText: state.error,
+}));

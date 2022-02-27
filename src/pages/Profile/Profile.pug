@@ -1,5 +1,6 @@
 .profile
-    a(href='./#chat').profile__back-link Назад
+    | {{chatLink}}
+    | {{logoutLink}}
     .profile__content  
         form.profile-form
             .profile-form__group 
@@ -12,6 +13,8 @@
                 | {{formControlEmail}}
                 | {{formControlPhone}}
             .profile-form__group 
-                | {{formControlPassword}}
-                | {{formControlPasswordRepeat}}
+                | {{formControlOldPassword}}
+                | {{formControlNewPassword}}
+            span.form-control__error.profile-form__error='{{errorText}}'
+
             | {{button}}

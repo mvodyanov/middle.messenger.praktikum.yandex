@@ -18,6 +18,10 @@
     opacity: 0.6;
   }
 
+  &.is-disabled {
+    pointer-events: none;
+  }
+
   &--transparent {
     background: transparent;
     color: $blue;

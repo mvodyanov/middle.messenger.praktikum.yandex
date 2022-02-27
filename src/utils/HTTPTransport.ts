@@ -1,3 +1,4 @@
+import { ENDPOINTS } from '../api/endpoints';
 import { Options } from '../types/types';
 
 enum METHODS {
@@ -6,25 +7,30 @@ enum METHODS {
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
-
 export default class HTTPTransport {
-  get = (url: string, options: Options) => {
-    const request = this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+  private _pathname = '';
+
+  constructor(url: string) {
+    this._pathname = ENDPOINTS.ROOT + url;
+  }
+
+  get = (url: string, options?: Options) => {
+    const request = this.request(url, { ...options, method: METHODS.GET }, options?.timeout);
     return request;
   };
 
-  post = (url: string, options: Options) => {
-    const request = this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  post = (url: string, options?: Options) => {
+    const request = this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
     return request;
   };
 
-  put = (url: string, options: Options) => {
-    const request = this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  put = (url: string, options?: Options) => {
+    const request = this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
     return request;
   };
 
-  delete = (url: string, options: Options) => {
-    const request = this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  delete = (url: string, options?: Options) => {
+    const request = this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
     return request;
   };
 
@@ -35,18 +41,21 @@ export default class HTTPTransport {
     }, []).join('&')}`;
   }
 
-  private request = (url: string, options: Options, timeout = 5000) => {
-    const { headers = {}, method, data } = options;
+  private request = (url: string, options: Options, timeout = 5000): Promise<XMLHttpRequest> => {
+    const { headers = { 'Content-Type': 'application/json' }, method, data } = options;
+    const path = this._pathname + url;
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
       const isGet = (method === METHODS.GET);
 
       xhr.open(
         method!,
         isGet && data
-          ? `${url}${this.queryStringify(data)}`
-          : url,
+          ? `${path}${this.queryStringify(data)}`
+          : path,
       );
 
       Object.keys(headers).forEach((key) => {
@@ -55,7 +64,13 @@ export default class HTTPTransport {
 
       xhr.timeout = timeout;
 
-      xhr.onload = () => resolve(xhr);
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          resolve(xhr);
+        } else {
+          reject(JSON.parse(xhr.responseText));
+        }
+      };
       xhr.onabort = reject;
       xhr.onerror = reject;
       xhr.ontimeout = reject;
