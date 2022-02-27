@@ -10,10 +10,17 @@
   "scripts": {
     "lint": "eslint . --fix",
     "dev": "parcel src/index.html --open",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --target app",
     "start": "npm run build && node ./index.js",
     "prepare": "husky install",
     "test": "./node_modules/.bin/mocha -r jsdom-global/register"
+  },
+  "targets": {
+    "app": {
+      "context": "browser",
+      "includeNodeModules": true,
+      "outputFormat": "esmodule"
+    }
   },
   "dependencies": {
     "express": "^4.17.2",
