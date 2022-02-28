@@ -10,13 +10,19 @@
   "scripts": {
     "lint": "eslint . --fix",
     "dev": "parcel src/index.html --open",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --target app",
     "start": "npm run build && node ./index.js",
     "prepare": "husky install",
     "test": "./node_modules/.bin/mocha -r jsdom-global/register"
   },
+  "targets": {
+    "app": {
+      "context": "browser",
+      "includeNodeModules": true,
+      "outputFormat": "esmodule"
+    }
+  },
   "dependencies": {
-    "@babel/preset-typescript": "^7.16.7",
     "express": "^4.17.2",
     "utils": "^0.3.1",
     "uuid": "^8.3.2"
@@ -30,8 +36,12 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.17.5",
     "@babel/plugin-transform-runtime": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
     "@babel/register": "^7.17.0",
+    "@babel/runtime": "^7.17.2",
     "@parcel/transformer-inline-string": "^2.2.1",
     "@parcel/transformer-pug": "^2.2.1",
     "@parcel/transformer-sass": "^2.2.1",

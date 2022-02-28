@@ -7,6 +7,7 @@ export const ENDPOINTS = {
     SIGNIN: '/signin',
     USER: '/user',
     LOGOUT: '/logout',
+    RESOURCES: '/resources',
   },
   USER: {
     PATH: '/user',
