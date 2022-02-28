@@ -27,6 +27,17 @@ class UserController {
       Store.set('error', error.reason || '');
     }
   }
+
+  public async changeUserAvatar(files: FileList | null) {
+    if (files) {
+      const avatarFile = files[0];
+      const formData = new FormData();
+      formData.append('avatar', avatarFile);
+      const res = await userApi.changeAvatar(formData);
+
+      Store.set('auth.user', (JSON.parse(res.response)));
+    }
+  }
 }
 
 export default new UserController();

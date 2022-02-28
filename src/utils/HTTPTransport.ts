@@ -44,7 +44,6 @@ export default class HTTPTransport {
   private request = (url: string, options: Options, timeout = 5000): Promise<XMLHttpRequest> => {
     const { headers = { 'Content-Type': 'application/json' }, method, data } = options;
     const path = this._pathname + url;
-
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -58,9 +57,11 @@ export default class HTTPTransport {
           : path,
       );
 
-      Object.keys(headers).forEach((key) => {
-        xhr.setRequestHeader(key, headers[key]);
-      });
+      if (headers != null) {
+        Object.keys(headers).forEach((key) => {
+          xhr.setRequestHeader(key, headers[key]);
+        });
+      }
 
       xhr.timeout = timeout;
 
@@ -78,7 +79,8 @@ export default class HTTPTransport {
       if (isGet || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        // @ts-ignore
+        xhr.send(options.isRawData ? data : JSON.stringify(data));
       }
     });
   };

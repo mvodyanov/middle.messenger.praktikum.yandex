@@ -12,8 +12,9 @@ export type Children = Record<string, any>;
 export type Options = {
   method?: string
   timeout?: number
-  headers?: Record<string, string>
+  headers?: Record<string, string> | null
   data?: Record<string, any>
+  isRawData?: boolean,
 };
 
 export type PlainObject<T = any> = {
