@@ -52,14 +52,14 @@ class Profile extends Block {
         name: 'oldPassword',
         label: 'Старый пароль',
         type: 'text',
-        // placeholder: '***',
+        placeholder: '***',
         rule: VALIDATION_RULES.PASSWORD,
       }),
       formControlNewPassword: new FormControl({
         name: 'newPassword',
         label: 'Новый пароль',
         type: 'text',
-        // placeholder: '***',
+        placeholder: '***',
         rule: VALIDATION_RULES.PASSWORD,
       }),
       button: new Button({

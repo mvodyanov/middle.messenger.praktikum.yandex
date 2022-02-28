@@ -59,7 +59,7 @@ export default connect(ChatWindow, (state) => ({
     label: user.login,
     className: `chat-window__user-button ${state.auth.user?.id === user.id && 'is-disabled'}`,
     events: { click: () => ChatController.deleteChatUsers([user.id]) },
-  })) || '',
+  })) || null,
   noCurrentChat: state.chat.current == null && 'is-no-current-chat',
-  messageList: state.chat.current?.messageList?.map((message) => new Message(message)) || '',
+  messageList: state.chat.current?.messageList?.map((message) => new Message(message)) || null,
 }));
