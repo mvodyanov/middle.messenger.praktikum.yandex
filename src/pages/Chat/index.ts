@@ -88,5 +88,5 @@ export default connect(Chat, (state) => ({
       : '',
     timestamp: chat.last_message?.time || '',
     count: chat.unread_count === 0 ? '' : chat.unread_count.toString(),
-  })) || '',
+  })) || null,
 }));
