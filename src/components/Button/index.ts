@@ -12,7 +12,7 @@ export default class Button extends Block {
   constructor(props: IProps) {
     super({
       type: 'button',
-      className: 'text',
+      className: '',
       ...props,
     });
   }

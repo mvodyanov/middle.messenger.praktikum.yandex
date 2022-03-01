@@ -1,20 +1,35 @@
 import template from './ChatListItem.pug';
 import Block from '../../utils/Block';
+import { router } from '../..';
+import { ROUTES } from '../../utils/consts';
+import { getTimestampTime } from '../../utils';
 
 type IProps = {
+  chatId: number
   author: string
   content: string
   timestamp: string
-  count?: number
+  count: string
 };
 
 export default class ChatListItem extends Block {
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: IProps) {
-    super(props);
+    super({
+      ...props,
+      events: {
+        click: (e: Event) => this.go(e),
+      },
+    });
+  }
+
+  go(e: Event) {
+    e.preventDefault();
+    e.stopPropagation();
+    router.go(`${ROUTES.CHAT}?chatId=${this.props.chatId}`);
   }
 
   render() {
+    this.props.timestamp = getTimestampTime(this.props.timestamp);
     return this.compile(template, this.props);
   }
 }

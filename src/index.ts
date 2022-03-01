@@ -1,41 +1,24 @@
+import store from './utils/Store';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Error from './pages/Error';
+import { Error404, Error500 } from './pages/Error';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
-import { Block } from './types/types';
+import Router from './utils/Router';
+import { appSelector, ROUTES } from './utils/consts';
 
-const app = document.querySelector('#app')!;
+const getIsLoggedIn = () => !!store.getState().auth.user;
 
-const ROUTES = {
-  HOMEPAGE: '',
-  LOGIN: '#login',
-  REGISTER: '#register',
-  CHAT: '#chat',
-  PROFILE: '#profile',
-  ERROR: {
-    404: '#error/404',
-    500: '#error/500',
-  },
-};
+export const router = new Router(appSelector, window);
 
-const render = (Page: Block) => {
-  app.innerHTML = '';
-  app.appendChild(Page.render());
-};
-
-const hashHandler = () => {
-  const { hash } = window.location;
-  switch (hash) {
-    case ROUTES.HOMEPAGE:
-    case ROUTES.LOGIN: render(new Login()); break;
-    case ROUTES.REGISTER: render(new Register()); break;
-    case ROUTES.CHAT: render(new Chat()); break;
-    case ROUTES.PROFILE: render(new Profile()); break;
-    case ROUTES.ERROR[500]: render(new Error(500)); break;
-    default: render(new Error(404));
-  }
-};
-
-hashHandler();
-window.addEventListener('hashchange', hashHandler);
+router
+  .initUser().then(() => {
+    router
+      .use(ROUTES.HOMEPAGE, Login, () => !getIsLoggedIn())
+      .use(ROUTES.REGISTER, Register, () => !getIsLoggedIn())
+      .use(ROUTES.CHAT, Chat, getIsLoggedIn)
+      .use(ROUTES.PROFILE, Profile, getIsLoggedIn)
+      .use(ROUTES.ERROR[500], Error500)
+      .use(ROUTES.ERROR[404], Error404)
+      .start();
+  });

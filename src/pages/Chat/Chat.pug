@@ -1,11 +1,12 @@
 .chat
     .chat-list 
         .chat-list__header 
-            a.chat-list__profile-link(href='/#profile') Профиль
-            input.chat-list__search(type="text" placeholder='Поиск')
+            | {{profileLink}}
+            //- input.chat-list__search(type='text' placeholder='Поиск') todo: make search
         .chat-list__body
-            | {{chatListItem}}
+            | {{chatList}}
     .chat-content
+        | {{chatWindow}}
         .chat-content-control 
             button(type='file').chat-content-control__file
                 img(src='../../../static/icons/file.svg')

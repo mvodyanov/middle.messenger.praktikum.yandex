@@ -1,5 +1,8 @@
 import template from './Avatar.pug';
 import Block from '../../utils/Block';
+import userController from '../../controllers/user-controller';
+import { ENDPOINTS } from '../../api/endpoints';
+import { connect } from '../../utils/Store';
 
 type IProps = {
   name: string
@@ -9,7 +12,7 @@ type IProps = {
   className?: string
   rule?: string
 };
-export default class Avatar extends Block {
+class Avatar extends Block {
   name: string;
 
   protected eventTarget;
@@ -20,6 +23,9 @@ export default class Avatar extends Block {
       value: '',
       className: '',
       errorText: '',
+      events: {
+        change: () => this.onChange(),
+      },
       ...props,
     });
     this.name = props.name;
@@ -27,15 +33,26 @@ export default class Avatar extends Block {
   }
 
   getValue() {
-    return (this.getContent().querySelector(this.eventTarget) as HTMLInputElement).value;
+    return (this.getContent().querySelector(this.eventTarget) as HTMLInputElement).files;
+  }
+
+  onChange() {
+    userController.changeUserAvatar(this.getValue());
   }
 
   render() {
     setTimeout(() => {
       // todo: just because pug can't render image src
-      const avatarImageComponent = this.getContent().querySelector('.avatar__image');
-      avatarImageComponent!.setAttribute('src', this.props.value);
+      const avatarImageComponent = this.getContent().querySelector('.avatar__block');
+      avatarImageComponent!.setAttribute(
+        'style',
+        `background-image: url(${ENDPOINTS.ROOT + ENDPOINTS.AUTH.RESOURCES}/${this.props.value})`,
+      );
     });
     return this.compile(template, this.props);
   }
 }
+
+export default connect(Avatar, (state) => ({
+  value: state.auth.user?.avatar,
+}));
