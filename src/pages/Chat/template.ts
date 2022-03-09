@@ -7,9 +7,8 @@ export default `
   <div class="chat-content">
     {{chatWindow}}
     <div class="chat-content-control">
-      <button class="chat-content-control__file" type="file">
-        <img src="/file.1fffb63c.svg" /></button
-      >{{formControlMessage}} {{button}}
+      {{formControlMessage}}
+      {{button}}
     </div>
   </div>
 </div>

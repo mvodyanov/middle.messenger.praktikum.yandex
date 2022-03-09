@@ -1,12 +1,9 @@
+import { v4 as makeUUID } from 'uuid';
 import { isArray, isEqual } from '.';
 import { Props, Children } from '../types/types';
 import EventBus from './EventBus';
 import templateWithProps from './templateWithProps';
 
-// weird git test error: @parcel/packager-js:
-// External modules are not supported when building for browser
-// when import { v4 as makeUUID } from 'uuid';
-const makeUUID = () => Math.random().toString();
 export default abstract class Block {
   static EVENTS = {
     INIT: 'init',

@@ -10,6 +10,14 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.bundle.js',
   },
+  devServer: {
+    static: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 4000,
+    historyApiFallback: {
+      index: 'index.html',
+    },
+  },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
   },
