@@ -1,4 +1,3 @@
-import './styles/index.scss';
 import store from './utils/Store';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -7,6 +6,7 @@ import Profile from './pages/Profile';
 import Chat from './pages/Chat';
 import Router from './utils/Router';
 import { appSelector, ROUTES } from './utils/consts';
+import './styles/index.scss';
 
 const getIsLoggedIn = () => !!store.getState().auth.user;
 

@@ -1,13 +1,14 @@
 FROM node:latest
-WORKDIR /var/www
+WORKDIR /app
 
-# COPY package*.json ./
-# RUN npm i
-# COPY . .
-COPY ./src ./src
 COPY ./package.json ./package.json
-COPY ./index.js ./index.js
-RUN npm install --only=prod && npm run build
+RUN npm install
+COPY ./src src
+COPY ./index.js index.js
+COPY ./tsconfig.json tsconfig.json
+COPY ./webpack.config.js webpack.config.js
+
+RUN npm run build
 
 EXPOSE 3000
 CMD node index.js 
