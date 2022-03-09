@@ -1,3 +1,6 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const path = require('path');
 
 module.exports = {
@@ -5,7 +8,7 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'project-name.bundle.js',
+    filename: 'index.bundle.js',
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
@@ -24,6 +27,27 @@ module.exports = {
         ],
         exclude: /(node_modules)/,
       },
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {},
+          },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'middle messenger praktikum yandex',
+      template: 'src/index.html',
+      filename: 'index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'style-bundle.css',
+    }),
+  ],
 };

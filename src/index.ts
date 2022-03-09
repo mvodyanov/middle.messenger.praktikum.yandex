@@ -1,3 +1,4 @@
+import './styles/index.scss';
 import store from './utils/Store';
 import Login from './pages/Login';
 import Register from './pages/Register';
