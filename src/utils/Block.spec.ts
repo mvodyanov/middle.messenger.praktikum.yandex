@@ -1,9 +1,7 @@
-import * as pug from 'pug';
 import { assert } from 'chai';
 import Block from './Block';
 
-const template = pug.render('button(type="button").button {{label}}');
-
+const template = '<button class="button" type="button">{{label}}</button>';
 class Button extends Block {
   constructor(props: {
     label: string;
@@ -34,6 +32,7 @@ describe('Block', () => {
   it('Экземпляр Блока с евентами', () => {
     let button: Block;
     const handleEvent = () => {
+      // @ts-ignore
       button.setProps({ label: 'Нажать' });
     };
     button = new Button({
@@ -43,6 +42,7 @@ describe('Block', () => {
       },
     });
     button.render();
+    // @ts-ignore
     button.getContent().click();
     assert.equal(
       button.getContent().outerHTML,

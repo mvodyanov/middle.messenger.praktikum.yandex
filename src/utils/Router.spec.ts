@@ -43,11 +43,13 @@ describe('Router', () => {
 
   it('По запросу находит роут', () => {
     router.go(ROUTES.HOMEPAGE);
+    // @ts-ignore
     assert.equal(router._currentRoute?._block.props.name, 'TestComponent');
   });
 
   it('Если запрошен роут, которого нет - то выдаётся роут показывающий страницу ошибки', () => {
     router.go('/whatever');
+    // @ts-ignore
     assert.equal(router._currentRoute?._block.props.name, 'ErrorComponent');
   });
 });
