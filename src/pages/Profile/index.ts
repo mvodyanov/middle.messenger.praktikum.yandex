@@ -1,4 +1,4 @@
-import template from './Profile.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';

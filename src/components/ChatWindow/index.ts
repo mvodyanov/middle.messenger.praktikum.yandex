@@ -1,4 +1,4 @@
-import template from './ChatWindow.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import { connect } from '../../utils/Store';
 import Button from '../Button';

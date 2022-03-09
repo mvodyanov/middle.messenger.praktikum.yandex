@@ -1,4 +1,4 @@
-import template from './ChatListItem.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import { router } from '../..';
 import { ROUTES } from '../../utils/consts';

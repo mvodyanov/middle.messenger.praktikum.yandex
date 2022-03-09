@@ -1,4 +1,4 @@
-import template from './Login.pug';
+import template from './template';
 import { VALIDATION_RULES } from '../../utils/validation';
 import Block from '../../utils/Block';
 import FormControl from '../../components/FormControl';

@@ -1,10 +1,11 @@
 /* eslint-disable max-classes-per-file */
-import template from './Error.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import Link from '../../components/Link';
 import { router } from '../..';
-import store from '../../utils/Store';
+
 import { ROUTES } from '../../utils/consts';
+import store from '../../utils/Store';
 
 const getErrorText = (code: number) => {
   switch (code) {

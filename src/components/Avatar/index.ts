@@ -1,4 +1,4 @@
-import template from './Avatar.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import userController from '../../controllers/user-controller';
 import { ENDPOINTS } from '../../api/endpoints';

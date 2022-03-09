@@ -1,4 +1,4 @@
-import template from './Link.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import { router } from '../..';
 
