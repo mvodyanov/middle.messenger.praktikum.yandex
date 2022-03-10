@@ -10,11 +10,11 @@ import './styles/index.scss';
 
 const getIsLoggedIn = () => !!store.getState().auth.user;
 
-export const router = new Router(appSelector, window);
+export const appRouter = new Router(appSelector, window);
 
-router
+appRouter
   .initUser().then(() => {
-    router
+    appRouter
       .use(ROUTES.HOMEPAGE, Login, () => !getIsLoggedIn())
       .use(ROUTES.REGISTER, Register, () => !getIsLoggedIn())
       .use(ROUTES.CHAT, Chat, getIsLoggedIn)

@@ -2,7 +2,7 @@
 import template from './template';
 import Block from '../../utils/Block';
 import Link from '../../components/Link';
-import { router } from '../..';
+import { appRouter } from '../..';
 
 import { ROUTES } from '../../utils/consts';
 import store from '../../utils/Store';
@@ -32,9 +32,9 @@ class Error extends Block {
   onBack(event: Event) {
     event.preventDefault();
     if (store.getState().auth.user) {
-      router.go(ROUTES.CHAT);
+      appRouter.go(ROUTES.CHAT);
     } else {
-      router.go(ROUTES.HOMEPAGE);
+      appRouter.go(ROUTES.HOMEPAGE);
     }
   }
 
