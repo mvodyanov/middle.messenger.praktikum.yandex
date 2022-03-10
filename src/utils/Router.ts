@@ -1,4 +1,3 @@
-import authController from '../controllers/auth-controller';
 import { AConstructorTypeOf } from '../types/types';
 import Block from './Block';
 import { ROUTES } from './consts';
@@ -48,10 +47,6 @@ class Router extends EventBus {
     this.routes.push(route);
 
     return this;
-  }
-
-  async initUser() {
-    await authController.initUser();
   }
 
   start() {

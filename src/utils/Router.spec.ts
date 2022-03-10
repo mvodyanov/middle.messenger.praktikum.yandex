@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import { JSDOM } from 'jsdom';
 import Block from './Block';
 import { ROUTES } from './consts';
-import Router from './router'; // when import 'Router' (first upperCase) - got undefined error
+import Router from './Router';
 
 class TestComponent extends Block {
   constructor() {
