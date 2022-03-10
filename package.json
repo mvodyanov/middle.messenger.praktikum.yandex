@@ -10,7 +10,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "dev": "npx webpack-dev-server --open",
-    "build": "npx webpack --mode production",
+    "build": "npx webpack",
     "start": "npm run build && node ./index.js",
     "prepare": "husky install",
     "test": "npx mocha -r jsdom-global/register --require ignore-styles"
