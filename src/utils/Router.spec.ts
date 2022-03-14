@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import { JSDOM } from 'jsdom';
 import Block from './Block';
 import { ROUTES } from './consts';
-import Router from './router';
+import Router from './Router';
 
 class TestComponent extends Block {
   constructor() {
@@ -43,11 +43,13 @@ describe('Router', () => {
 
   it('По запросу находит роут', () => {
     router.go(ROUTES.HOMEPAGE);
+    // @ts-ignore
     assert.equal(router._currentRoute?._block.props.name, 'TestComponent');
   });
 
   it('Если запрошен роут, которого нет - то выдаётся роут показывающий страницу ошибки', () => {
     router.go('/whatever');
+    // @ts-ignore
     assert.equal(router._currentRoute?._block.props.name, 'ErrorComponent');
   });
 });

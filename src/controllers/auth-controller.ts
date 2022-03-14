@@ -2,7 +2,7 @@ import AuthAPI from '../api/auth-api';
 import { Children } from '../types/types';
 import { ROUTES } from '../utils/consts';
 import { validateFormControls } from '../utils/events';
-import { router } from '..';
+import { appRouter } from '..';
 import Store from '../utils/Store';
 
 const authAPI = new AuthAPI();
@@ -15,7 +15,7 @@ class AuthController {
       await authAPI.signUp(formData);
       const user = await authAPI.getUser();
       Store.set('auth.user', JSON.parse(user.response));
-      router.go(ROUTES.CHAT);
+      appRouter.go(ROUTES.CHAT);
     } catch (error) {
       Store.set('error', error.reason || '');
     }
@@ -28,7 +28,7 @@ class AuthController {
       await authAPI.signIn(formData);
       const user = await authAPI.getUser();
       Store.set('auth.user', JSON.parse(user.response));
-      router.go(ROUTES.CHAT);
+      appRouter.go(ROUTES.CHAT);
     } catch (error) {
       Store.set('error', error.reason || '');
     }
@@ -39,7 +39,7 @@ class AuthController {
       const user = await authAPI.getUser();
       Store.set('auth.user', JSON.parse(user.response));
       if (window.location.pathname === ROUTES.HOMEPAGE) {
-        router.go(ROUTES.CHAT);
+        appRouter.go(ROUTES.CHAT);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -61,7 +61,7 @@ class AuthController {
     try {
       await authAPI.logout();
       Store.set('auth.user', null);
-      router.go(ROUTES.HOMEPAGE);
+      appRouter.go(ROUTES.HOMEPAGE);
     } catch (error) {
       Store.set('error', error.reason || '');
     }

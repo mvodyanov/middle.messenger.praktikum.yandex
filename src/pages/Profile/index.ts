@@ -1,4 +1,4 @@
-import template from './Profile.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import FormControl from '../../components/FormControl';
 import Button from '../../components/Button';
@@ -9,6 +9,7 @@ import Link from '../../components/Link';
 import AuthController from '../../controllers/auth-controller';
 import store, { connect } from '../../utils/Store';
 import UserController from '../../controllers/user-controller';
+import { UserResponse } from '../../types/types';
 
 class Profile extends Block {
   constructor() {
@@ -101,7 +102,7 @@ class Profile extends Block {
     if (user) {
       Object.entries(this.children)
         .filter(([, children]) => children instanceof FormControl || children instanceof Avatar)
-        .forEach(([key, children]) => {
+        .forEach(([key, children]: [string, { name : keyof UserResponse }]) => {
           this.children[key].setProps({ value: user[children.name] || '' });
         });
     }

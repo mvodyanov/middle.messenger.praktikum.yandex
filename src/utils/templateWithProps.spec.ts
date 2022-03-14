@@ -1,8 +1,7 @@
-import * as pug from 'pug';
 import { assert } from 'chai';
 import templateWithProps from './templateWithProps';
 
-const template = pug.render('button(type="{{type}}" class="{{className}}").button {{label}}');
+const template = '<button class="{{simple}} button" type="button">{{label}}</button>';
 
 describe('templateWithProps', () => {
   it('Pug-шаблон рендерится с пропсами', () => {

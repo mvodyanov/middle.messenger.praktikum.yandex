@@ -1,4 +1,4 @@
-import template from './Chat.pug';
+import template from './template';
 import { VALIDATION_RULES } from '../../utils/validation';
 import Block from '../../utils/Block';
 import FormControl from '../../components/FormControl';
@@ -11,7 +11,7 @@ import store, { connect } from '../../utils/Store';
 import ChatWindow from '../../components/ChatWindow';
 import { RouterEvents } from '../../utils/Router';
 import { ChatListItemResponse } from '../../types/types';
-import { router } from '../..';
+import { appRouter } from '../..';
 
 class Chat extends Block {
   socket?: WebSocket;
@@ -68,7 +68,7 @@ class Chat extends Block {
 
   async componentDidMount() {
     await ChatController.getChatList();
-    router.on(RouterEvents.UPDATED, () => this.onRouteHandler());
+    appRouter.on(RouterEvents.UPDATED, () => this.onRouteHandler());
     this.onRouteHandler();
   }
 

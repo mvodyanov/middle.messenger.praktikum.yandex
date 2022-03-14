@@ -1,4 +1,4 @@
-import template from './Message.pug';
+import template from './template';
 import Block from '../../utils/Block';
 import { MessageResponse } from '../../types/types';
 import store from '../../utils/Store';

@@ -1,5 +1,5 @@
+import template from './template';
 import { validate } from '../../utils/validation';
-import template from './FormControl.pug';
 import Block from '../../utils/Block';
 import { sanitizeHTML } from '../../utils';
 

@@ -1,4 +1,4 @@
-import template from './Button.pug';
+import template from './template';
 import Block from '../../utils/Block';
 
 type IProps = {
