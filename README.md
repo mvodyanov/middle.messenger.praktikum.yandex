@@ -1,11 +1,13 @@
 ## Chat from the training course Yandex.Practicum by profession middle frontend developer.
 This project is designed to develop a text chat as part of a training course.
 Currently connected:
+
 sprint 1
 - parcel to build the project
 - pug template engine (unfortunately pug does not have methods for rendering on the client, you probably need to switch to handlebars)
 - express server for distributing statics
 - scss for styling
+
 sprint2
 - implemented MVC approach and own classes Block, EventBus
 - developed by HTTPClient
@@ -14,12 +16,14 @@ sprint2
 - added code quality analysis tools eslint & stylelint + husky precommit hooks for linting before commit
 - the project has completely moved to typescript
 - implemented hash routing
+
 sprint3
 - added full routing based on History
 - added global application state storage
 - developed the functionality of data interaction with api, as well as dynamic messaging
 - implemented tested with mocha+chai
 - application is protected from XSS attacks
+
 sprint4
 - definitive departure from pug, implemented its own templating engine
 - Implemented assembly of a static application in a Docker container
