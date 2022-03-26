@@ -33,13 +33,13 @@ sprint4
 
 Automatic deployment occurs when delpoy branch is updated
 ## Commands
-npm run dev to start the parcel dev server
-to build the project npm run build
-to start express server npm run start
-to run the code quality checker (link) npm run lint
-to run tests npm run test
+npm run dev to start the parcel dev server   
+to build the project npm run build   
+to start express server npm run start   
+to run the code quality checker (link) npm run lint  
+to run tests npm run test  
 
 ## Links
-layouts (provided by the Yandex.Practice team): https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1
-expanded copy on netlify: https://agitated-visvesvaraya-3225a8.netlify.app
-copy on heroku: https://vodyanov-app.herokuapp.com/ 
+layouts (provided by the Yandex.Practice team): https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1  
+expanded copy on netlify: https://agitated-visvesvaraya-3225a8.netlify.app  
+copy on heroku: https://vodyanov-app.herokuapp.com/   
