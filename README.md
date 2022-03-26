@@ -1,41 +1,41 @@
-## Чат из учебного курса Яндекс.Прктикум по профессии middle frontend разработчик.
-Данный проект предназначен для разработки текстового чата в рамках учебного курса. 
-На текущем этапе подключены:
+## Chat from the training course Yandex.Practicum by profession middle frontend developer.
+This project is designed to develop a text chat as part of a training course.
+Currently connected:
 sprint 1
-- parcel для сборки проекта
-- шаблонизатор pug (к сожалению у pug отсутствуют методы для рендера на клиенте, вероятно надо переходить на handlebars)
-- express сервер для раздачи статики
-- scss для работы со стилями 
+- parcel to build the project
+- pug template engine (unfortunately pug does not have methods for rendering on the client, you probably need to switch to handlebars)
+- express server for distributing statics
+- scss for styling
 sprint2
-- реализован подход MVC и собстевнные классы Block, EventBus
-- разработан HTTPClient 
-- структура проекта разделена на независимые компоненты
-- добавлена валидация полей форм
-- подключены средства анализа качства кода eslint & stylelint + husky precommit-хуки для линтинга перед коммитом
-- проект полностью переехал на typescript
-- внедрен hash-роутинг
+- implemented MVC approach and own classes Block, EventBus
+- developed by HTTPClient
+- the structure of the project is divided into independent components
+- added validation of form fields
+- added code quality analysis tools eslint & stylelint + husky precommit hooks for linting before commit
+- the project has completely moved to typescript
+- implemented hash routing
 sprint3
-- добавлен полноценный роутинг на основе History
-- добавлено глобальное хранилище состояния приложения
-- разработан функционал взаимодействия днными с api, а так же  динамического обмена сообщениями
-- внедрено тестированое с помощью mocha+chai
-- приожение защищено от XSS-атак
+- added full routing based on History
+- added global application state storage
+- developed the functionality of data interaction with api, as well as dynamic messaging
+- implemented tested with mocha+chai
+- application is protected from XSS attacks
 sprint4
-- окончательный уход от pug, реализован собственный шаблонизатор   
-- реализована сборка статического приложения в Docker-контейнере 
-- настроен Webpack вместо Parcel 
-- проведен аудит зависимостей
-- деплой на Heroku
+- definitive departure from pug, implemented its own templating engine
+- Implemented assembly of a static application in a Docker container
+- configured Webpack instead of Parcel
+- audit of dependencies was carried out
+- deploy to Heroku
 
-Происходит автоматический деплой при обновлении ветки delpoy
-## Команды
-npm run dev для запуска dev-сервера parcel
-для сборки проекта npm run build
-для запуска express-сервера npm run start
-для запуска утилиты проверки качества кода (link) npm run lint
-для запуска тестов npm run test
+Automatic deployment occurs when delpoy branch is updated
+## Commands
+npm run dev to start the parcel dev server
+to build the project npm run build
+to start express server npm run start
+to run the code quality checker (link) npm run lint
+to run tests npm run test
 
-## Ссылки
-макеты (предосталвенные командой Яндекс.Практикума): https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1 
-развернутая копия на netlify: https://agitated-visvesvaraya-3225a8.netlify.app 
-копия на heroku: https://vodyanov-app.herokuapp.com/ 
+## Links
+layouts (provided by the Yandex.Practice team): https://www.figma.com/file/24EUnEHGEDNLdOcxg7ULwV/Chat?node-id=0%3A1
+expanded copy on netlify: https://agitated-visvesvaraya-3225a8.netlify.app
+copy on heroku: https://vodyanov-app.herokuapp.com/ 
