@@ -24,7 +24,9 @@
   },
   "dependencies": {
     "express": "^4.17.2",
+    "https": "^1.0.0",
     "husky": "^7.0.4",
+    "openssl-self-signed-certificate": "^1.1.6",
     "uuid": "^8.3.2"
   },
   "lint-staged": {
